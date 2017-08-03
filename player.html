@@ -1,19 +1,4 @@
 <!--
-Copyright 2014 Google Inc. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- -->
-<!--
 This sample demonstrates how to build your own Receiver for use with Google
 Cast.
 
@@ -41,7 +26,7 @@ The overlay layer holds:
   <link rel="stylesheet" href="player.css" />
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
-  <script type="text/javascript" src="player.js"></script>
+  <script type="text/javascript" src="main.js"></script>
 </head>
 <body style="margin: 0">
     <div id="player" class="player">
@@ -84,8 +69,7 @@ The overlay layer holds:
         </div>
     </div>
     <script>
-      var playerDiv = document.getElementById('player');
-      new sampleplayer.CastPlayer(playerDiv).start();
+      //new sampleplayer.CastPlayer(playerDiv).start();
     </script>
 </body>
 </html>
