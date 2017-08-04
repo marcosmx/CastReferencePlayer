@@ -22,7 +22,7 @@ crm.onReady = (event) => {
 
 crm.onSenderConnected = function (event) {
     senders = crm.getSenders();
-    printDebugMessage("connected senders", senders);
+    console.log("connected senders", senders);
 }
 
 crm.onSenderDisconnected = function (event) {
