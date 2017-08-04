@@ -1,6 +1,9 @@
 videoEl = document.getElementById('player');
-receiverManger = cast.receiver.CastReceiverManager.getInstance();
-mediaManager = new cast.receiver.MediaManager(videoEl)
-receiverManger.start();
+crm = cast.receiver.CastReceiverManager.getInstance();
+//mediaManager = new cast.receiver.MediaManager(videoEl)
+crm.start();
 
-console.log(mediaManager, receiverManger);
+crm.onReady = (event) => {
+    let capabilities = crm.getDeviceCapabilities();
+    console.log(capabilities);
+}
