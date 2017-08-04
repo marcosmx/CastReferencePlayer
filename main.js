@@ -45,7 +45,7 @@ function initPlayer() {
     var playerParam = {
         'autoplay': false,
         'loop': false,
-        'encodingPriority' : ['dash']
+        'encodingPriority' : ['hls']
     };
 
     OO.ready(function () {
