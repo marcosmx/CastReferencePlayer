@@ -50,6 +50,6 @@ function initPlayer() {
     OO.ready(function () {
         window.pp = OO
             .Player
-            .create('player', '00d2dvYjE6ZRG3rPscx6uFe-s-Oa0OPW', playerParam);
+            .create('player', 'lwczIzYjE6xi7LKQEvVMRbY2LlnCSSR7', playerParam);
     });
 }
