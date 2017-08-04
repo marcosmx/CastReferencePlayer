@@ -11,5 +11,5 @@ crm.start();
 
 crm.onReady = (event) => {
     let capabilities = crm.getDeviceCapabilities();
-    console.log(capabilities);
+    console.log("las caps ",capabilities);
 }
