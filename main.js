@@ -18,6 +18,7 @@ crm.start();
 crm.onReady = (event) => {
     let capabilities = crm.getDeviceCapabilities();
     console.log("las caps ", capabilities);
+    initPlayer();
 }
 
 crm.onSenderConnected = function (event) {
@@ -37,4 +38,18 @@ crm.onSenderDisconnected = function (event) {
 crm.onShutdown = function (event) {
     senders = crm.getSenders();
     console.log(senders);
+}
+
+function initPlayer() {
+
+    var playerParam = {
+        'autoplay': false,
+        'loop': false
+    };
+
+    OO.ready(function () {
+        window.pp = OO
+            .Player
+            .create('player', '00d2dvYjE6ZRG3rPscx6uFe-s-Oa0OPW', playerParam);
+    });
 }
