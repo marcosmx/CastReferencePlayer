@@ -8,6 +8,14 @@ cast
     .setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
 videoEl = document.getElementById('player');
+
+
+castMB = castReceiverManager.getCastMessageBus("urn:x-cast:ooyala");
+
+castMB.onMessage = function(evt) {
+    console.log("message bus", evt);
+};
+
 crm = cast
     .receiver
     .CastReceiverManager
