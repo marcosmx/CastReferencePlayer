@@ -10,17 +10,20 @@ cast
 videoEl = document.getElementById('player');
 
 
-castMB = castReceiverManager.getCastMessageBus("urn:x-cast:ooyala");
 
-castMB.onMessage = function(evt) {
-    console.log("message bus", evt);
-};
 
 crm = cast
     .receiver
     .CastReceiverManager
     .getInstance();
 //mediaManager = new cast.receiver.MediaManager(videoEl)
+
+castMB = crm.getCastMessageBus("urn:x-cast:ooyala");
+
+castMB.onMessage = function(evt) {
+    console.log("message bus", evt);
+};
+
 crm.start();
 
 crm.onReady = (event) => {
