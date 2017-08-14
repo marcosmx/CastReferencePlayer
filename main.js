@@ -22,6 +22,11 @@ castMB = crm.getCastMessageBus("urn:x-cast:ooyala");
 
 castMB.onMessage = function(evt) {
     console.log("message bus", evt);
+    var data =  JSON.parse(evt.data);
+
+    if (data.action == 'play'){
+        pp.play();
+    }
 };
 
 crm.start();
