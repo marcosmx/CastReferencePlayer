@@ -5,7 +5,16 @@ cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 videoEl = document.getElementById('player-temp');
 
 crm = cast.receiver.CastReceiverManager.getInstance();
+
+////// media manager stuff
 mediaManager = new cast.receiver.MediaManager(videoEl)
+function onLoad(event){
+    console.log(event);
+}
+
+mediaManager.onLoad = onLoad.bind(this);
+
+//////end media manager
 
 castMB = crm.getCastMessageBus("urn:x-cast:ooyala");
 
@@ -20,15 +29,11 @@ castMB.onMessage = function(evt) {
 
 crm.start();
 
-function onLoad(event){
-    console.log(event);
-}
 
-mediaManager.onLoad = onLoad;
 
 crm.onReady = (event) => {
-    let capabilities = crm.getDeviceCapabilities();
-    console.log("las caps ", capabilities);
+    //let capabilities = crm.getDeviceCapabilities();
+    //console.log("las caps ", capabilities);
     //initPlayer();
 }
 
