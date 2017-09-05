@@ -3,11 +3,12 @@ cast.player.api.setLoggerLevel(cast.player.api.LoggerLevel.DEBUG);
 cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
 videoEl = document.getElementById('player-temp');
+////// media manager stuff
+mediaManager = new cast.receiver.MediaManager(videoEl);
 
 crm = cast.receiver.CastReceiverManager.getInstance();
 
-////// media manager stuff
-mediaManager = new cast.receiver.MediaManager(videoEl);
+
 
 function onGetStatus(event) {
     console.log("Thaaaa event status: ", event);
