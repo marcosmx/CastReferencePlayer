@@ -1,22 +1,11 @@
-cast
-    .player
-    .api
-    .setLoggerLevel(cast.player.api.LoggerLevel.DEBUG);
-cast
-    .receiver
-    .logger
-    .setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
-videoEl = document.getElementById('player');
+cast.player.api.setLoggerLevel(cast.player.api.LoggerLevel.DEBUG);
+cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
+videoEl = document.getElementById('player-temp');
 
-
-
-crm = cast
-    .receiver
-    .CastReceiverManager
-    .getInstance();
-//mediaManager = new cast.receiver.MediaManager(videoEl)
+crm = cast.receiver.CastReceiverManager.getInstance();
+mediaManager = new cast.receiver.MediaManager(videoEl)
 
 castMB = crm.getCastMessageBus("urn:x-cast:ooyala");
 
@@ -31,10 +20,16 @@ castMB.onMessage = function(evt) {
 
 crm.start();
 
+function onLoad(event){
+    console.log(event);
+}
+
+mediaManager.onLoad = onLoad;
+
 crm.onReady = (event) => {
     let capabilities = crm.getDeviceCapabilities();
     console.log("las caps ", capabilities);
-    initPlayer();
+    //initPlayer();
 }
 
 crm.onSenderConnected = function (event) {
