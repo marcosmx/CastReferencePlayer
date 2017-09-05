@@ -7,7 +7,7 @@ videoEl = document.getElementById('player-temp');
 crm = cast.receiver.CastReceiverManager.getInstance();
 
 ////// media manager stuff
-//mediaManager = new cast.receiver.MediaManager(videoEl);
+mediaManager = new cast.receiver.MediaManager(videoEl);
 
 function onLoad(event){
     console.log(event);
