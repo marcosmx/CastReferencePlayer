@@ -9,11 +9,19 @@ crm = cast.receiver.CastReceiverManager.getInstance();
 ////// media manager stuff
 mediaManager = new cast.receiver.MediaManager(videoEl);
 
+function onGetStatus(event) {
+    console.log("Thaaaa event status: ", event);
+    event.data = { customData: { debug: debug } } // to make sure it will be printed with Chromecast-debug tag
+    printDebugMessage("onGetStatus", event);
+    mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+  }
+
 function onLoad(event){
     console.log(event);
 }
 
 //mediaManager.onLoad = onLoad.bind(this);
+mediaManager.onGetStatus = onGetStatus.bind(this);
 
 //////end media manager
 
