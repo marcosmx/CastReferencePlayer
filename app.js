@@ -29,7 +29,7 @@ function initPlayer(data){
 
     OO.ready(function(){
         window.pp = OO.Player.create(
-            'video', // element id
+            'media', // element id
             data.ec, // Embed code
             params
         )
