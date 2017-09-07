@@ -52,7 +52,7 @@
     <script>
       /* var playerDiv = document.getElementById('player');
       new sampleplayer.CastPlayer(playerDiv).start(); */
-
+      cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
       window.mediaElement = document.getElementById('video');
     window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
     window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
