@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="player.css" />
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
-  <script type="text/javascript" src="player.js"></script>
+  <script type="text/javascript" src="app.js"></script>
 </head>
 <body style="margin: 0">
     <div id="player" class="player">
@@ -52,11 +52,11 @@
     <script>
       /* var playerDiv = document.getElementById('player');
       new sampleplayer.CastPlayer(playerDiv).start(); */
-      cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+      /* cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
       window.mediaElement = document.getElementById('video');
     window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
     window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-    window.castReceiverManager.start();
+    window.castReceiverManager.start(); */
     </script>
 </body>
 </html>
