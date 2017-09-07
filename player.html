@@ -12,7 +12,7 @@
 <body style="margin: 0">
     <div id="player" class="player">
         <div class="media">
-            <video></video>
+            <video id="video"></video>
         </div>
         <div class="logo"></div>
         <div class="spinner"></div>
@@ -50,8 +50,13 @@
         </div>
     </div>
     <script>
-      var playerDiv = document.getElementById('player');
-      new sampleplayer.CastPlayer(playerDiv).start();
+      /* var playerDiv = document.getElementById('player');
+      new sampleplayer.CastPlayer(playerDiv).start(); */
+
+      window.mediaElement = document.getElementById('video');
+    window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
+    window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+    window.castReceiverManager.start();
     </script>
 </body>
 </html>
