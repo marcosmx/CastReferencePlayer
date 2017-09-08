@@ -18,11 +18,18 @@ mediaManager.onLoad = function(event){
     element_.remove();
 }
 
+function _onCreate(player){
+    player.mb.subscribe("*", "marco-example", function(e){
+        console.log(e);
+    })
+}
+
 function initPlayer(data){
     let params = {
         'autoplay': true,
         'loop': false,
-        debug: true
+        debug: true,
+        onCreate : _onCreate
     };
 
     if (data.params["embedToken"] !== undefined) {
