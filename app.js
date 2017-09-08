@@ -55,21 +55,21 @@ castManager.onReady = (event) => {
 }
 
 castManager.onSenderConnected = function (event) {
-    senders = crm.getSenders();
+    senders = castManager.getSenders();
     console.log("connected senders", senders);
 }
 
 castManager.onSenderDisconnected = function (event) {
-    senders = crm.getSenders();
+    senders = castManager.getSenders();
     // if the last sender disconnects, then stop the cast session entirely if it was
     // an explicit disconnection
     if ((senders.length === 0) && (event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER)) {
-        crm.stop();
+        castManager.stop();
     }
 }
 
 castManager.onShutdown = function (event) {
-    senders = crm.getSenders();
+    senders = castManager.getSenders();
     console.log(senders);
 }
 
