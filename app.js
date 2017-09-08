@@ -21,7 +21,8 @@ mediaManager.onLoad = function(event){
 function initPlayer(data){
     let params = {
         'autoplay': true,
-        'loop': false
+        'loop': false,
+        debug: true
     };
 
     if (data.params["embedToken"] !== undefined) {
