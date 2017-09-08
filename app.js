@@ -48,4 +48,29 @@ function initPlayer(data){
 
 castManager = cast.receiver.CastReceiverManager.getInstance();
 
+castManager.onReady = (event) => {
+    //let capabilities = crm.getDeviceCapabilities();
+    console.log("System ready");
+    //initPlayer();
+}
+
+castManager.onSenderConnected = function (event) {
+    senders = crm.getSenders();
+    console.log("connected senders", senders);
+}
+
+castManager.onSenderDisconnected = function (event) {
+    senders = crm.getSenders();
+    // if the last sender disconnects, then stop the cast session entirely if it was
+    // an explicit disconnection
+    if ((senders.length === 0) && (event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER)) {
+        crm.stop();
+    }
+}
+
+castManager.onShutdown = function (event) {
+    senders = crm.getSenders();
+    console.log(senders);
+}
+
 castManager.start();
