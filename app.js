@@ -1,4 +1,9 @@
 
+//elements block
+
+var _splashStatus = document.querySelector('#status-cast');
+
+
 
 //set log level
 cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
@@ -51,6 +56,7 @@ castManager = cast.receiver.CastReceiverManager.getInstance();
 castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
     console.log("System ready");
+    _splashStatus.textContent = "Ready to cast"
     //initPlayer();
 }
 
