@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Change the title tag to your app's name to display as the details text on the Cast device picker -->
+  <title>Casting app name</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="player.css" />
+  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
+  <script src="//player.ooyala.com/core/96a95341121448faa5a05c87eff62f4d"></script>
+</head>
+<body style="margin: 0">
+    <div id="player" class="player">
+        <div class="media">
+            <video id="video"></video>
+        </div>
+        <div class="logo"></div>
+        <div class="spinner"></div>
+        <div class="watermark"></div>
+        <div class="gradient"></div>
+        <div class="overlay">
+            <div class="media-info">
+                <div class="media-artwork"></div>
+                <div class="media-text">
+                    <div class="media-title"></div>
+                    <div class="media-subtitle"></div>
+                </div>
+            </div>
+            <div class="preview-mode-info">
+                <div class="preview-mode-artwork"></div>
+                <div class="preview-mode-text">
+	                <div class="preview-mode-timer">
+                        <div class="preview-mode-timer-starts">Up next in&nbsp;</div>
+                        <div class="preview-mode-timer-countdown"></div>
+                        <div class="preview-mode-timer-sec">&nbsp;secs...</div>
+                    </div>
+                    <div class="preview-mode-title"></div>
+                    <div class="preview-mode-subtitle"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <span class="controls-play-pause"></span>
+                <span class="controls-cur-time"></span>
+                <span class="controls-total-time"></span>
+                <div class="controls-progress">
+                    <div class="controls-progress-inner progressBar"></div>
+                    <div class="controls-progress-thumb"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      /* var playerDiv = document.getElementById('player');
+      new sampleplayer.CastPlayer(playerDiv).start(); */
+      /* cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+      window.mediaElement = document.getElementById('video');
+    window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
+    window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+    window.castReceiverManager.start(); */
+    </script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
