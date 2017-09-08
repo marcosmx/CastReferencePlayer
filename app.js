@@ -3,7 +3,7 @@
 //set log level
 cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
-element_ = document.getElementById('video');
+element_ = document.getElementById('temp-video');
 
 mediaManager = new cast.receiver.MediaManager(element_);
 
@@ -15,6 +15,7 @@ mediaManager.onLoad = function(event){
     
     initPlayer(data);
     mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+    element_.remove();
 }
 
 function initPlayer(data){
