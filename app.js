@@ -1,5 +1,63 @@
 const _eventnamespace = "ooyala-chromecast";
 
+// ooyala player controller
+
+const playerCtrl = (function (OO) {
+    var _player = null;
+    var _defaultParams = {
+            autoplay: true,
+            onCreate: _onCreate
+    }
+
+    function initPlayer(data) {
+        var params = Object.assign({}, data.params);
+        if (_player === null) {
+            OO.ready(function () {
+                _player = OO.Player.create('player', data.ec, params);
+            });
+        } else{
+            params.debug = true;
+            _player.setEmbedCode(data.ec, params);
+        }        
+    }
+
+    //utils
+
+    function getVideoEl(elementId) {
+        var el = document.querySelector(`#{elementId} video`) || document.querySelector(`#{elementId}`)
+        if (el && el.nodeName !== "VIDEO") {
+            throw `Video Element with ID: {elementId} not found`
+        }
+
+        return el;
+    }
+
+    // Player events handlers
+
+    function _onPlayerCreated(e, data) {
+
+        // here we need to handle the player ui controls
+        console.log("on player Created", e, data, arguments);
+    }
+
+    function _onVcCreatedElement(e, data) {
+        console.log("VC created Element");
+        _playerEl.remove();
+        _playerEl = getVideoEl(data.domId);
+        if (_playerEl) {
+            mediaManager.setMediaElement(_playerEl);
+        }
+    }
+
+    function _onCreate(player) {
+        player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, onVcCreatedElement)
+        player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
+
+    }
+
+    return {setPlayer: _initPlayer};
+})(OO);
+
 //elements block
 
 var _splashStatus = document.querySelector('#status-cast');
@@ -18,82 +76,9 @@ mediaManager.onLoad = function(event){
     let data = event.data.media.customData;
     // TODO: Handle loading Screen
     
-    initPlayer(data);
+    playerCtrl.setPlayer(data);
     mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-    //element_.remove();
 }
-
-//utils
-
-function getVideoEl(elementId){
-    var el = document.querySelector(`#{elementId} video`) || document.querySelector(`#{elementId}`)
-    if (el && el.nodeName !== "VIDEO"){
-        throw `Video Element with ID: {elementId} not found`
-    }
-
-    return el;
-}
-
-// Player events handlers
-
-
-function onPlayerCreated(e, data){
-
-    // here we need to handle the player ui controls
-    console.log("on player Created", e, data, arguments);
-}
-
-function onVcCreatedElement(e, data){
-    _playerEl.remove();
-    _playerEl = getVideoEl(data.domId);
-    if (_playerEl){
-        mediaManager.setMediaElement(_playerEl);
-    }
-}
-
-function _onCreate(player){
-    /* player.mb.subscribe("*", "ooyala-chromecast", function(e){
-        switch (e) {
-            case OO.EVENTS.PLAYER_CREATED:
-                //remove temp element
-                _playerVideo.remove();
-                _playerVideo =  document.get
-                //replace the media manager with the new element
-                mediaManager.setMediaElement(mediaElement);                
-                break;
-        
-            default:
-                break;
-        }
-    }) */
-
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, onVcCreatedElement)
-
-    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
-   
-}
-
-function initPlayer(data){
-    let params = {
-        'autoplay': true,
-        'loop': false,
-        debug: false,
-        onCreate : _onCreate
-    };
-
-    if (data.params["embedToken"] !== undefined) {
-        params["embedToken"] = data.params["embedToken"];
-    }
-
-    OO.ready(function(){
-        window.pp = OO.Player.create(
-            'player', // element id
-            data.ec, // Embed code
-            params
-        )
-    });
-}
-
 
 castManager = cast.receiver.CastReceiverManager.getInstance();
 
