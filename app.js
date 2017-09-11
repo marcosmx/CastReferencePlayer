@@ -8,7 +8,7 @@ var _playerVideo = document.getElementById('temp-video');;
 
 
 //set log level
-cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+//cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
 mediaManager = new cast.receiver.MediaManager(_playerVideo);
 
@@ -20,14 +20,14 @@ mediaManager.onLoad = function(event){
     
     initPlayer(data);
     mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-    element_.remove();
+    //element_.remove();
 }
 
 // Player events handlers
 
 
-function onPlayerCreated(e){
-    console.log(e, arguments);
+function onPlayerCreated(e, data){
+    console.log("on player Created", e, data, arguments);
 }
 
 function _onCreate(player){
@@ -46,10 +46,12 @@ function _onCreate(player){
         }
     }) */
 
-    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event){
-        console.log("on vc element created", event, arguments);
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event, data){
+        console.log("on vc element created", data);
     })
+
+    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
+   
 }
 
 function initPlayer(data){
