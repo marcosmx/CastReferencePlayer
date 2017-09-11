@@ -47,7 +47,6 @@ const playerCtrl = (function (OO) {
                 _player = OO.Player.create('player', data.ec, params);
             });
         } else{
-            params.debug = true;
             _player.setEmbedCode(data.ec, params);
         }        
     }
@@ -76,6 +75,14 @@ mediaManager.onLoad = function(event){
     playerCtrl.setPlayer(data);
     mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
+
+mediaManager.onGetStatus = function (event) {
+    mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+}
+
+
+
+// Cast Manager stuff
 
 castManager = cast.receiver.CastReceiverManager.getInstance();
 
