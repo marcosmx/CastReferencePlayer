@@ -127,13 +127,13 @@ _messageBus.onMessage = function handleMessage(e) {
                 playhead: playerCtrl.getPlayHead(),
                 embed: playerCtrl.getCurrentAsset()
             }
-            this.send(e.senderId, JSON.stringify(status));
+            _messageBus.send(e.senderId, JSON.stringify(status));
             break;
         case "error":
             //displayCastMediaError(message.message);
             break;
     }
-}.bind(_messageBus);
+};
 
 _castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
