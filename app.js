@@ -47,16 +47,16 @@ function _onCreate(player){
     }) */
 
     player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
-    player.mb.subscribe(VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event){
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event){
         console.log("on vc element created", event, arguments);
     })
 }
 
 function initPlayer(data){
     let params = {
-        'autoplay': true,
+        'autoplay': false,
         'loop': false,
-        debug: true,
+        debug: false,
         onCreate : _onCreate
     };
 
