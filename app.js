@@ -4,22 +4,6 @@ const _eventnamespace = "ooyala-chromecast";
 
 const playerCtrl = (function (OO) {
     var _player = null;
-    var _defaultParams = {
-            autoplay: true,
-            onCreate: _onCreate
-    }
-
-    function _initPlayer(data) {
-        var params = Object.assign({}, data.params);
-        if (_player === null) {
-            OO.ready(function () {
-                _player = OO.Player.create('player', data.ec, params);
-            });
-        } else{
-            params.debug = true;
-            _player.setEmbedCode(data.ec, params);
-        }        
-    }
 
     //utils
 
@@ -53,6 +37,19 @@ const playerCtrl = (function (OO) {
         player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement)
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
 
+    }
+
+    function _initPlayer(data) {
+        var params = Object.assign({}, data.params);
+        params.onCreate = _onCreate;
+        if (_player === null) {
+            OO.ready(function () {
+                _player = OO.Player.create('player', data.ec, params);
+            });
+        } else{
+            params.debug = true;
+            _player.setEmbedCode(data.ec, params);
+        }        
     }
 
     return {setPlayer: _initPlayer};
