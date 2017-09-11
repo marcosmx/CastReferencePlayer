@@ -47,6 +47,9 @@ function _onCreate(player){
     }) */
 
     player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
+    player.mb.subscribe(VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event){
+        console.log("on vc element created", event, arguments);
+    })
 }
 
 function initPlayer(data){
