@@ -102,7 +102,18 @@ _mediaManager.onGetStatus = function (event) {
 
 
 
-function handleMessage(e) {
+
+
+
+
+
+// Cast Manager stuff
+
+_castManager = cast.receiver.CastReceiverManager.getInstance();
+
+_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
+
+_messageBus.onMessage = function handleMessage(e) {
     console.log(e);
 
     var data = JSON.parse(e.data);
@@ -122,18 +133,7 @@ function handleMessage(e) {
             //displayCastMediaError(message.message);
             break;
     }
-}
-
-
-
-
-// Cast Manager stuff
-
-_castManager = cast.receiver.CastReceiverManager.getInstance();
-
-_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
-
-_messageBus.onMessage = handleMessage.bind(_messageBus);
+}.bind(_messageBus);
 
 _castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
