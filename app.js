@@ -8,6 +8,8 @@ var _messageBus = null;
 
 var playerCtrl = (function (OO) {
     var _player = null;
+    var _playHeadInfo = {};
+    var _currentAsset = null;
 
     //utils
 
@@ -37,8 +39,9 @@ var playerCtrl = (function (OO) {
         }
     }
 
-    function _onPlayheadTimeChanged( currentTime, duration, buffer, seek, videoId) {
-        console.log("playhead time changed: ", arguments);
+    function _onPlayheadTimeChanged() {
+        _playHeadInfo = [...arguments];
+        console.log("playhead time changed: ", _playHeadInfo);
     }
 
     function _onCreate(player) {
@@ -51,6 +54,7 @@ var playerCtrl = (function (OO) {
     function _initPlayer(data) {
         var params = Object.assign({}, data.params);
         params.onCreate = _onCreate;
+        _currentAsset = data.ec;
         if (_player === null) {
             OO.ready(function () {
                 _player = OO.Player.create('player', data.ec, params);
@@ -64,7 +68,9 @@ var playerCtrl = (function (OO) {
         setPlayer: _initPlayer,
         getState: function() {
             return _player.getState();
-        }
+        },
+        getPlayHead: ()=>(_playHeadInfo),
+        getCurrentAsset: ()=>(_currentAsset)
     };
 })(OO);
 
@@ -94,9 +100,9 @@ _mediaManager.onGetStatus = function (event) {
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
-// Message bus
 
-/* function handleMessage(e) {
+
+function handleMessage(e) {
     console.log(e);
 
     var data = JSON.parse(e.data);
@@ -107,25 +113,27 @@ _mediaManager.onGetStatus = function (event) {
         case "getstatus":
             var status = {
                 state: playerCtrl.getState(),
-                playhead: currentPlayheadTimeInfo,
-                embed: currentEmbedCode
+                playhead: playerCtrl.getPlayHead(),
+                embed: playerCtrl.getCurrentAsset()
             }
-            _messageBus.send(e.senderId, JSON.stringify(status));
+            this.send(e.senderId, JSON.stringify(status));
             break;
         case "error":
             //displayCastMediaError(message.message);
             break;
     }
-} */
+}
 
 
-//_messageBus.onMessage(handleMessage);
+
 
 // Cast Manager stuff
 
 _castManager = cast.receiver.CastReceiverManager.getInstance();
 
 _messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
+
+_messageBus.onMessage(handleMessage).bind(_messageBus);
 
 _castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
