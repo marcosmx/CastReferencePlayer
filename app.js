@@ -1,16 +1,16 @@
+const _eventnamespace = "ooyala-chromecast";
 
 //elements block
 
 var _splashStatus = document.querySelector('#status-cast');
+var _playerVideo = document.getElementById('temp-video');;
 
 
 
 //set log level
 cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
-element_ = document.getElementById('temp-video');
-
-mediaManager = new cast.receiver.MediaManager(element_);
+mediaManager = new cast.receiver.MediaManager(_playerVideo);
 
 ////media Manager stuff
 
@@ -23,10 +23,30 @@ mediaManager.onLoad = function(event){
     element_.remove();
 }
 
+// Player events handlers
+
+
+function onPlayerCreated(e){
+    console.log(e, arguments);
+}
+
 function _onCreate(player){
-    player.mb.subscribe("*", "marco-example", function(e){
-        console.log(e);
-    })
+    /* player.mb.subscribe("*", "ooyala-chromecast", function(e){
+        switch (e) {
+            case OO.EVENTS.PLAYER_CREATED:
+                //remove temp element
+                _playerVideo.remove();
+                _playerVideo =  document.get
+                //replace the media manager with the new element
+                mediaManager.setMediaElement(mediaElement);                
+                break;
+        
+            default:
+                break;
+        }
+    }) */
+
+    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
 }
 
 function initPlayer(data){

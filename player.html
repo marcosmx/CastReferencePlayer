@@ -19,6 +19,7 @@ The overlay layer holds:
  -->
 <!DOCTYPE html>
 <html>
+
 <head>
   <!-- Change the title tag to your app's name to display as the details text on the Cast device picker -->
   <title>Casting app name</title>
@@ -26,17 +27,28 @@ The overlay layer holds:
   <link rel="stylesheet" href="player.css" />
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
-  <script src="//player.ooyala.com/core/96a95341121448faa5a05c87eff62f4d"></script>  
+  <script src="//player.ooyala.com/core/96a95341121448faa5a05c87eff62f4d"></script>
 </head>
+
 <body style="margin: 0">
-    <div id="splash-screen" class="fbox-container fs">
-        <img id="splash-image" src="images/ooyala-logo.svg"/>
-        <div id="status-cast">
-          Loading cast system...
-        </div>
-      </div>
-    <div id="player"></div>
-    <video src="" id="temp-video" class="hidden"></video>
-    <script type="text/javascript" src="app.js"></script>
+  <div id="splash-screen" class="fbox-container fs hidden">
+
+    <img id="splash-image" src="images/ooyala-logo.svg" />
+    <div id="status-cast">
+      Loading cast system...
+    </div>
+  </div>
+  <div id="media-info" class="hidden">
+    <div id="media-art"></div>
+    <div id="media-text">
+      <h3></h3>
+      <p></p>
+    </div>
+  </div>
+  <div id="player"></div>
+
+  <video src="" id="temp-video" class="hidden"></video>
+  <script type="text/javascript" src="app.js"></script>
 </body>
+
 </html>
