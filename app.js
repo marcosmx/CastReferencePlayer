@@ -118,13 +118,14 @@ _mediaManager.onGetStatus = function (event) {
     }
 } */
 
-_messageBus = castReceiverManager.getCastMessageBus(_messagebusnamespace);
 
 //_messageBus.onMessage(handleMessage);
 
 // Cast Manager stuff
 
 _castManager = cast.receiver.CastReceiverManager.getInstance();
+
+_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
 _castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
