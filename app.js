@@ -133,7 +133,7 @@ _castManager = cast.receiver.CastReceiverManager.getInstance();
 
 _messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
-_messageBus.onMessage(handleMessage.bind(_messageBus));
+_messageBus.onMessage = handleMessage.bind(_messageBus);
 
 _castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
