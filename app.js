@@ -9,7 +9,7 @@ const playerCtrl = (function (OO) {
             onCreate: _onCreate
     }
 
-    function initPlayer(data) {
+    function _initPlayer(data) {
         var params = Object.assign({}, data.params);
         if (_player === null) {
             OO.ready(function () {
@@ -23,7 +23,7 @@ const playerCtrl = (function (OO) {
 
     //utils
 
-    function getVideoEl(elementId) {
+    function _getVideoEl(elementId) {
         var el = document.querySelector(`#{elementId} video`) || document.querySelector(`#{elementId}`)
         if (el && el.nodeName !== "VIDEO") {
             throw `Video Element with ID: {elementId} not found`
@@ -43,7 +43,7 @@ const playerCtrl = (function (OO) {
     function _onVcCreatedElement(e, data) {
         console.log("VC created Element");
         _playerEl.remove();
-        _playerEl = getVideoEl(data.domId);
+        _playerEl = _getVideoEl(data.domId);
         if (_playerEl) {
             mediaManager.setMediaElement(_playerEl);
         }
