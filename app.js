@@ -3,14 +3,14 @@ const _eventnamespace = "ooyala-chromecast";
 //elements block
 
 var _splashStatus = document.querySelector('#status-cast');
-var _playerVideo = document.getElementById('temp-video');;
+var _playerEl = document.getElementById('temp-video');;
 
 
 
 //set log level
 //cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
-mediaManager = new cast.receiver.MediaManager(_playerVideo);
+mediaManager = new cast.receiver.MediaManager(_playerEl);
 
 ////media Manager stuff
 
@@ -23,11 +23,32 @@ mediaManager.onLoad = function(event){
     //element_.remove();
 }
 
+//utils
+
+function getVideoEl(elementId){
+    var el = document.querySelector(`#{elementId} video`) || document.querySelector(`#{elementId}`)
+    if (el && el.nodeName !== "VIDEO"){
+        throw `Video Element with ID: {elementId} not found`
+    }
+
+    return el;
+}
+
 // Player events handlers
 
 
 function onPlayerCreated(e, data){
+
+    // here we need to handle the player ui controls
     console.log("on player Created", e, data, arguments);
+}
+
+function onVcCreatedElement(e, data){
+    _playerEl.remove();
+    _playerEl = getVideoEl(data.domId);
+    if (_playerEl){
+        mediaManager.setMediaElement(_playerEl);
+    }
 }
 
 function _onCreate(player){
@@ -46,9 +67,7 @@ function _onCreate(player){
         }
     }) */
 
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(event, data){
-        console.log("on vc element created", data);
-    })
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, onVcCreatedElement)
 
     player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, onPlayerCreated);
    
@@ -56,7 +75,7 @@ function _onCreate(player){
 
 function initPlayer(data){
     let params = {
-        'autoplay': false,
+        'autoplay': true,
         'loop': false,
         debug: false,
         onCreate : _onCreate
