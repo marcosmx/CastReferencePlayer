@@ -1,4 +1,8 @@
 const _eventnamespace = "ooyala-chromecast";
+const _messagebusnamespace = "urn:x-cast:ooyala";
+const _mediaManager = null;
+const _castManager = null;
+const _messageBus = null;
 
 // ooyala player controller
 
@@ -33,9 +37,14 @@ const playerCtrl = (function (OO) {
         }
     }
 
+    function _onPlayheadTimeChanged( currentTime, duration, buffer, seek, videoId) {
+        console.log("playhead time changed: ", arguments);
+    }
+
     function _onCreate(player) {
-        player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement)
+        player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
+        player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
 
     }
 
@@ -51,7 +60,12 @@ const playerCtrl = (function (OO) {
         }        
     }
 
-    return {setPlayer: _initPlayer};
+    return {
+        setPlayer: _initPlayer,
+        getState: function() {
+            return _player.getState();
+        }
+    };
 })(OO);
 
 //elements block
@@ -64,52 +78,78 @@ var _playerEl = document.getElementById('temp-video');;
 //set log level
 //cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
-mediaManager = new cast.receiver.MediaManager(_playerEl);
+_mediaManager = new cast.receiver.MediaManager(_playerEl);
 
 ////media Manager stuff
 
-mediaManager.onLoad = function(event){
+_mediaManager.onLoad = function(event){
     let data = event.data.media.customData;
     // TODO: Handle loading Screen
     
     playerCtrl.setPlayer(data);
-    mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+    _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
-mediaManager.onGetStatus = function (event) {
-    mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+_mediaManager.onGetStatus = function (event) {
+    _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
+// Message bus
 
+/* function handleMessage(e) {
+    console.log(e);
+
+    var data = JSON.parse(e.data);
+    switch (data.action) {
+        case "setCCLanguage":
+            //setClosedCaptionsLanguage(message.data);
+            break;
+        case "getstatus":
+            var status = {
+                state: playerCtrl.getState(),
+                playhead: currentPlayheadTimeInfo,
+                embed: currentEmbedCode
+            }
+            _messageBus.send(e.senderId, JSON.stringify(status));
+            break;
+        case "error":
+            //displayCastMediaError(message.message);
+            break;
+    }
+} */
+
+_messageBus = castReceiverManager.getCastMessageBus(_messagebusnamespace);
+
+//_messageBus.onMessage(handleMessage);
 
 // Cast Manager stuff
 
-castManager = cast.receiver.CastReceiverManager.getInstance();
+_castManager = cast.receiver.CastReceiverManager.getInstance();
 
-castManager.onReady = (event) => {
+_castManager.onReady = (event) => {
     //let capabilities = crm.getDeviceCapabilities();
     console.log("System ready");
     _splashStatus.textContent = "Ready to cast"
     //initPlayer();
 }
 
-castManager.onSenderConnected = function (event) {
-    senders = castManager.getSenders();
+_castManager.onSenderConnected = function (event) {
+    senders = _castManager.getSenders();
     console.log("connected senders", senders);
 }
 
-castManager.onSenderDisconnected = function (event) {
-    senders = castManager.getSenders();
+_castManager.onSenderDisconnected = function (event) {
+    senders = _castManager.getSenders();
     // if the last sender disconnects, then stop the cast session entirely if it was
     // an explicit disconnection
     if ((senders.length === 0) && (event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER)) {
-        castManager.stop();
+        _castManager.stop();
     }
 }
 
-castManager.onShutdown = function (event) {
-    senders = castManager.getSenders();
+_castManager.onShutdown = function (event) {
+    senders = _castManager.getSenders();
     console.log(senders);
 }
 
-castManager.start();
+_castManager.start();
