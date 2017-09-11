@@ -1,12 +1,12 @@
 const _eventnamespace = "ooyala-chromecast";
 const _messagebusnamespace = "urn:x-cast:ooyala";
-const _mediaManager = null;
-const _castManager = null;
-const _messageBus = null;
+var _mediaManager = null;
+var _castManager = null;
+var _messageBus = null;
 
 // ooyala player controller
 
-const playerCtrl = (function (OO) {
+var playerCtrl = (function (OO) {
     var _player = null;
 
     //utils
