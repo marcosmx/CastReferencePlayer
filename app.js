@@ -46,7 +46,7 @@ var playerCtrl = (function (OO) {
 
     function _onInitialPlay(e){
         console.log(e);
-        _messageBus.broadcast(JSON.stringify(["playing"]));
+        _messageBus.broadcast(JSON.stringify({0:"playing"}));
     }
 
     function _onCreate(player) {
