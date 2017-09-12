@@ -55,6 +55,10 @@ var playerCtrl = (function (OO) {
         _messageBus.broadcast(JSON.stringify(message));
     }
 
+    function _onStop(){
+        _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
+    }
+
     function _onCreate(player) {
         player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
@@ -75,14 +79,6 @@ var playerCtrl = (function (OO) {
         } else{
             _player.setEmbedCode(data.ec, params);
         }        
-    }
-
-    function _onStop(){
-        _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
-    }
-
-    function _onPause(){
-        _player.mb.publish(OO.EVENTS.PAUSE);
     }
 
     return {
