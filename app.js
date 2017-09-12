@@ -74,6 +74,10 @@ var playerCtrl = (function (OO) {
         _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
     }
 
+    function _onStop(){
+        _player.mb.publish(OO.EVENTS.PAUSE);
+    }
+
     return {
         setPlayer: _initPlayer,
         getState: function() {
@@ -81,7 +85,8 @@ var playerCtrl = (function (OO) {
         },
         getPlayHead: ()=>(_playHeadInfo),
         getCurrentAsset: ()=>(_currentAsset),
-        stop: _onStop
+        stop: _onStop,
+        pause: _onPause
     };
 })(OO);
 
@@ -115,6 +120,12 @@ _mediaManager["origOnStop"] = _mediaManager.onStop;
 _mediaManager.onStop = function(event) {
     playerCtrl.stop();
     _mediaManager["origOnStop"](event);
+}
+
+_mediaManager["origOnPause"] = _mediaManager.onPause;
+_mediaManager.onPause = function(event) {
+    playerCtrl.pause();
+    _mediaManager["origOnPause"](event);
 }
 
 // Cast Manager stuff
