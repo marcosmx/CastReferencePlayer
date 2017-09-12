@@ -48,6 +48,10 @@ var playerCtrl = (function (OO) {
         player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
         player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
+        player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, ()=>(console.log("Initial Play:", arguments)));
+        player.mb.subscribe(OO.EVENTS.PLAY, _eventnamespace, ()=>(console.log("Play:", arguments)));
+        player.mb.subscribe(OO.EVENTS.VC_PLAYING, _eventnamespace, ()=>(console.log("VC Playing:", arguments)));
+        
 
     }
 
