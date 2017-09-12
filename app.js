@@ -74,7 +74,7 @@ var playerCtrl = (function (OO) {
         _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
     }
 
-    function _onStop(){
+    function _onPause(){
         _player.mb.publish(OO.EVENTS.PAUSE);
     }
 
