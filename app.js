@@ -126,6 +126,7 @@ _mediaManager["origOnPause"] = _mediaManager.onPause;
 _mediaManager.onPause = function(event) {
     playerCtrl.pause();
     _mediaManager["origOnPause"](event);
+    _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
 // Cast Manager stuff
