@@ -70,13 +70,18 @@ var playerCtrl = (function (OO) {
         }        
     }
 
+    function _onStop(){
+        _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
+    }
+
     return {
         setPlayer: _initPlayer,
         getState: function() {
             return _player.getState();
         },
         getPlayHead: ()=>(_playHeadInfo),
-        getCurrentAsset: ()=>(_currentAsset)
+        getCurrentAsset: ()=>(_currentAsset),
+        stop: _onStop
     };
 })(OO);
 
@@ -104,6 +109,12 @@ _mediaManager.onLoad = function(event){
 
 _mediaManager.onGetStatus = function (event) {
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
+}
+
+_mediaManager["origOnStop"] = _mediaManager.onStop;
+_mediaManager.onStop = function(event) {
+    playerCtrl.stop();
+    _mediaManager["origOnStop"](event);
 }
 
 // Cast Manager stuff
