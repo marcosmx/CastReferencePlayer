@@ -49,11 +49,18 @@ var playerCtrl = (function (OO) {
         _messageBus.broadcast(JSON.stringify({0:"playing"}));
     }
 
+    function _onPause(e) {
+        console.log(e, agruments);
+        var message = Object.assign({}, arguments)
+        _messageBus.broadcast(JSON.stringify(message));
+    }
+
     function _onCreate(player) {
         player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
         player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
-        player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);       
+        player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
+        player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPause);       
 
     }
 
@@ -124,8 +131,8 @@ _mediaManager.onStop = function(event) {
 
 _mediaManager["origOnPause"] = _mediaManager.onPause;
 _mediaManager.onPause = function(event) {
-    playerCtrl.pause();
     _mediaManager["origOnPause"](event);
+    playerCtrl.pause();    
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
