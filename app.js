@@ -1,7 +1,7 @@
 //elements block
 
 var _splashStatus = document.querySelector('#status-cast');
-var _playerEl = document.querySelector('#emp-video');
+var _playerEl = document.querySelector('#temp-video');
 
 const _eventnamespace = "ooyala-chromecast";
 const _messagebusnamespace = "urn:x-cast:ooyala";
