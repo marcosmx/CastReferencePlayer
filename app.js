@@ -19,7 +19,7 @@ var playerCtrl = (function (OO) {
     //utils
 
     function _getVideoEl(elementId) {
-        var el = document.querySelector(`${elementId} video`) || document.querySelector(`${elementId}`);
+        var el = document.querySelector(`#${elementId} video`) || document.querySelector(`#${elementId}`);
         if (el && el.nodeName !== "VIDEO") {
             throw `Video Element with ID: {elementId} not found`
         }
