@@ -25,13 +25,8 @@ var playerCtrl = (function (OO) {
     // Player events handlers
 
     function _onPlayerCreated(e, data) {
-
         // here we need to handle the player ui controls
         console.log("on player Created", e, data, arguments);
-    }
-
-    function _onVcCreatedElement(e, data) {
-        console.log("VC created Element");
         _playerEl.remove();
         _playerEl = _getVideoEl(data.domId);
         if (_playerEl) {
@@ -63,7 +58,7 @@ var playerCtrl = (function (OO) {
     }
 
     function _onCreate(player) {
-        player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
+        //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
         player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
         player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
@@ -74,7 +69,7 @@ var playerCtrl = (function (OO) {
     function _initPlayer(data) {
         var params = Object.assign({}, data.params);
         params.onCreate = _onCreate;
-        data.ec = "JpeWNhbjrfKs0sIelRvR8R3YIEATk1ZG";
+        //data.ec = "JpeWNhbjrfKs0sIelRvR8R3YIEATk1ZG";
         //params.embedToken = "http://player.ooyala.com/sas/embed_token/lhNmYyOuUnCvRiHi5NbFBBLOG4xm/A2MGFyYTE6Dv_7o2E3zWqCcYAUyqO4t9?api_key=lhNmYyOuUnCvRiHi5NbFBBLOG4xm.S9VRE&expires=3042186829&&&&signature=AgkvXZW57DrxsLDdOiVEBWqkWPxxz75olqZfS505CeU";
         //var extra = {"api_ssl_server":"https://player-staging.ooyala.com","api_server":"http://player-staging.ooyala.com","auth_ssl_server":"https://player-staging.ooyala.com/sas","auth_server":"http://player-staging.ooyala.com/sas"};
         //Object.assign(params, extra);
