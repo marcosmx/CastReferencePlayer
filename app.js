@@ -1,3 +1,8 @@
+//elements block
+
+var _splashStatus = document.querySelector('#status-cast');
+var _playerEl = document.querySelector('#emp-video');
+
 const _eventnamespace = "ooyala-chromecast";
 const _messagebusnamespace = "urn:x-cast:ooyala";
 var _mediaManager = null;
@@ -29,6 +34,7 @@ var playerCtrl = (function (OO) {
         console.log("on player Created", e, data, arguments);
         _playerEl.remove();
         _playerEl = _getVideoEl(data.domId);
+        console.log("playerEL: ", _playerEl);
         if (_playerEl) {
             mediaManager.setMediaElement(_playerEl);
         }
@@ -36,7 +42,7 @@ var playerCtrl = (function (OO) {
 
     function _onPlayheadTimeChanged() {
         _playHeadInfo = [...arguments];
-        console.log("playhead time changed: ", _playHeadInfo);
+        //console.log("playhead time changed: ", _playHeadInfo);
     }
 
     function _onInitialPlay(e){
@@ -95,13 +101,6 @@ var playerCtrl = (function (OO) {
         pause: _onPause
     };
 })(OO);
-
-//elements block
-
-var _splashStatus = document.querySelector('#status-cast');
-var _playerEl = document.getElementById('temp-video');;
-
-
 
 //set log level
 //cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
