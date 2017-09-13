@@ -74,7 +74,7 @@ var playerCtrl = (function (OO) {
     function _initPlayer(data) {
         var params = Object.assign({}, data.params);
         params.onCreate = _onCreate;
-        data.ec = "xwcDNuYTE6bkDT-D8xsEbchJLfy0iBYI";
+        data.ec = "JpeWNhbjrfKs0sIelRvR8R3YIEATk1ZG";
         //params.embedToken = "http://player.ooyala.com/sas/embed_token/lhNmYyOuUnCvRiHi5NbFBBLOG4xm/A2MGFyYTE6Dv_7o2E3zWqCcYAUyqO4t9?api_key=lhNmYyOuUnCvRiHi5NbFBBLOG4xm.S9VRE&expires=3042186829&&&&signature=AgkvXZW57DrxsLDdOiVEBWqkWPxxz75olqZfS505CeU";
         //var extra = {"api_ssl_server":"https://player-staging.ooyala.com","api_server":"http://player-staging.ooyala.com","auth_ssl_server":"https://player-staging.ooyala.com/sas","auth_server":"http://player-staging.ooyala.com/sas"};
         //Object.assign(params, extra);
