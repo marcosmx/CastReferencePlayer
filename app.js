@@ -47,7 +47,7 @@ var playerCtrl = (function (OO) {
 
     function _onPlayheadTimeChanged() {
         _playHeadInfo = [...arguments];
-        console.log("playhead time changed: ", _playHeadInfo);
+        //console.log("playhead time changed: ", _playHeadInfo);
     }
 
     function _onInitialPlay(e){
@@ -108,7 +108,7 @@ var playerCtrl = (function (OO) {
 })(OO);
 
 //set log level
-//cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
 _mediaManager = new cast.receiver.MediaManager(_playerEl);
 
