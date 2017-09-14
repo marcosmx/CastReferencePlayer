@@ -38,6 +38,7 @@ var playerCtrl = (function (OO) {
     function _onVcCreatedElement(e, data) {
         console.log("VC created Element");
         _playerEl.remove();
+        _playerEl = null;
         _playerEl = _getVideoEl(data.domId);
         if (_playerEl) {
             mediaManager.setMediaElement(_playerEl);
