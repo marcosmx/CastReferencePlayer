@@ -147,7 +147,7 @@ _mediaManager.customizedStatusCallback = function(ms) {
     return ms;
 }
 
-
+_castManager = cast.receiver.CastReceiverManager.getInstance();
 
 _messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
@@ -176,7 +176,7 @@ _messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
 // Cast Manager stuff
 
-_castManager = cast.receiver.CastReceiverManager.getInstance();
+
 
 _castManager.onReady = (event) => {
     console.log("System ready");
