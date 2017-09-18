@@ -51,7 +51,7 @@ var playerCtrl = (function (OO) {
     }
 
     function _onInitialPlay(e){
-        console.log(e);
+        console.log("player ctrl: init playback ", e);
         _messageBus.broadcast(JSON.stringify({0:"playing"}));
     }
 
@@ -87,10 +87,12 @@ var playerCtrl = (function (OO) {
 
         _currentAsset = data.ec;
         if (_player === null) {
+            console.log("player ctrl: about to create a new player instance", params);
             OO.ready(function () {
                 _player = OO.Player.create('player', data.ec, params);
             });
         } else{
+            console.log("player ctrl: set new embed code: ", data.ec)
             _player.setEmbedCode(data.ec, params);
         }        
     }
@@ -122,7 +124,7 @@ _mediaManager.onLoad = function(event){
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
-_mediaManager.onGetStatus = function (event) {
+/* _mediaManager.onGetStatus = function (event) {
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
@@ -137,20 +139,19 @@ _mediaManager.onPause = function(event) {
     _mediaManager["origOnPause"](event);
     playerCtrl.pause();    
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-}
+} */
 
 _mediaManager.customizedStatusCallback = function(ms) {
     ms.data = { customData: { debug: true } }  // mmm this flag needs to be checked
+    console.log("custom status cb: ", ms);
     return ms;
 }
 
-// Cast Manager stuff
 
-_castManager = cast.receiver.CastReceiverManager.getInstance();
 
-_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
+//_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
-_messageBus.onMessage = function handleMessage(e) {
+/* _messageBus.onMessage = function handleMessage(e) {
     console.log(e);
 
     var data = JSON.parse(e.data);
@@ -170,13 +171,16 @@ _messageBus.onMessage = function handleMessage(e) {
             //displayCastMediaError(message.message);
             break;
     }
-};
+}; */
+
+
+// Cast Manager stuff
+
+_castManager = cast.receiver.CastReceiverManager.getInstance();
 
 _castManager.onReady = (event) => {
-    //let capabilities = crm.getDeviceCapabilities();
     console.log("System ready");
     _splashStatus.textContent = "Ready to cast"
-    //initPlayer();
 }
 
 _castManager.onSenderConnected = function (event) {
