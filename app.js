@@ -110,7 +110,7 @@ var playerCtrl = (function (OO) {
 })(OO);
 
 //set log level
-cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+//cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
 
 _mediaManager = new cast.receiver.MediaManager(_playerEl);
 
