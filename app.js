@@ -149,7 +149,7 @@ _mediaManager.customizedStatusCallback = function(ms) {
 
 
 
-//_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
+_messageBus = _castManager.getCastMessageBus(_messagebusnamespace);
 
 /* _messageBus.onMessage = function handleMessage(e) {
     console.log(e);
