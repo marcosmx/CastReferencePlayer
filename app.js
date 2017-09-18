@@ -139,6 +139,11 @@ _mediaManager.onPause = function(event) {
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
+_mediaManager.customizedStatusCallback = function(ms) {
+    ms.data = { customData: { debug: true } }  // mmm this flag needs to be checked
+    return ms;
+}
+
 // Cast Manager stuff
 
 _castManager = cast.receiver.CastReceiverManager.getInstance();
