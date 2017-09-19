@@ -70,8 +70,8 @@ var _currentAsset = null;
         //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
         //player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
         //player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
-        player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
-        player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);       
+        //player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
+        //player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);       
 
     }
 
