@@ -8,10 +8,89 @@ const _messagebusnamespace = "urn:x-cast:ooyala";
 var _mediaManager = null;
 var _castManager = null;
 var _messageBus = null;
+var _player = null;
+var _playHeadInfo = {};
+var _currentAsset = null;
 
 // ooyala player controller
 
-var playerCtrl = (function (OO) {
+    //utils
+
+    function _getVideoEl(elementId) {
+        var el = document.querySelector(`#${elementId} video`) || document.querySelector(`#${elementId}`);
+        if (el && el.nodeName !== "VIDEO") {
+            throw `Video Element with ID: {elementId} not found`
+        }
+
+        return el;
+    }
+
+    // Player events handlers
+
+    function _onPlayerCreated(e, data) {
+
+        // here we need to handle the player ui controls
+        console.log("on player Created", e, data, arguments);
+    }
+
+    function _onVcCreatedElement(e, data) {
+        console.log("VC created Element");
+        _playerEl.remove();
+        _playerEl = null;
+        _playerEl = _getVideoEl(data.domId);
+        if (_playerEl) {
+            mediaManager.setMediaElement(_playerEl);
+        }
+    }
+
+    function _onPlayheadTimeChanged() {
+        _playHeadInfo = [...arguments];
+        //console.log("playhead time changed: ", _playHeadInfo);
+    }
+
+    function _onInitialPlay(e){
+        console.log("player ctrl: init playback ", e);
+        _messageBus.broadcast(JSON.stringify({0:"playing"}));
+    }
+
+    function _onPause() {
+        _player.mb.publish(OO.EVENTS.PAUSE);
+    }
+
+    function _onPaused(e) {
+        var message = Object.assign({}, e); // flatten the object and just keep direct properties
+        _messageBus.broadcast(JSON.stringify(message));
+    }
+
+    function _onStop(){
+        _player.mb.publish(OO.EVENTS.PLAYED, {type:"stop"});
+    }
+
+    function _onCreate(player) {
+        //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
+        player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
+        player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
+        player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
+        player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);       
+
+    }
+
+    function initPlayer(data){
+        var params = Object.assign({}, data.params);
+        params.onCreate = _onCreate;
+        _currentAsset = data.ec;
+        if (_player === null) {
+            console.log("player ctrl: about to create a new player instance", params);
+            OO.ready(function () {
+                _player = OO.Player.create('player', data.ec, params);
+            });
+        } else{
+            console.log("player ctrl: set new embed code: ", data.ec)
+            _player.setEmbedCode(data.ec, params);
+        }        
+    }
+
+/*var playerCtrl = (function (OO) {
     var _player = null;
     var _playHeadInfo = {};
     var _currentAsset = null;
@@ -107,7 +186,7 @@ var playerCtrl = (function (OO) {
         stop: _onStop,
         pause: _onPause
     };
-})(OO);
+})(OO);*/
 
 //set log level
 //cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
@@ -117,10 +196,11 @@ _mediaManager = new cast.receiver.MediaManager(_playerEl);
 ////media Manager stuff
 
 _mediaManager.onLoad = function(event){
-    let data = event.data.media.customData;
+    var data = event.data.media.customData;
     // TODO: Handle loading Screen
     
-    playerCtrl.setPlayer(data);
+    //playerCtrl.setPlayer(data);
+    initPlayer(data);
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
