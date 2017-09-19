@@ -68,8 +68,8 @@ var _currentAsset = null;
 
     function _onCreate(player) {
         //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
-        player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
-        player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
+        //player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
+        //player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
         player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
         player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);       
 
@@ -77,7 +77,7 @@ var _currentAsset = null;
 
     function initPlayer(data){
         var params = Object.assign({}, data.params);
-        //params.onCreate = _onCreate;
+        params.onCreate = _onCreate;
         _currentAsset = data.ec;
         if (_player === null) {
             console.log("player ctrl: about to create a new player instance", params);
@@ -212,14 +212,14 @@ _mediaManager.onLoad = function(event){
 _mediaManager.onStop = function(event) {
     playerCtrl.stop();
     _mediaManager["origOnStop"](event);
-}
+}*/
 
 _mediaManager["origOnPause"] = _mediaManager.onPause;
 _mediaManager.onPause = function(event) {
     _mediaManager["origOnPause"](event);
     playerCtrl.pause();    
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-} */
+}
 
 _mediaManager.customizedStatusCallback = function(ms) {
     ms.data = { customData: { debug: true } }  // mmm this flag needs to be checked
