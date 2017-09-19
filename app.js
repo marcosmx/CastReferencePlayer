@@ -72,8 +72,12 @@ var _currentAsset = null;
         //player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
         //player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, _eventnamespace, _onInitialPlay);
         //player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);
-        player.mb.subscribe(OO.EVENTS.PLAYING, "chromecast", function(e){
+        player.mb.subscribe(OO.EVENTS.PLAYING, "foo", function(e){
             console.log(" video is playing, ", e, arguments);
+        });
+
+        player.mb.subscribe(OO.EVENTS.VC_PLAYING, "foo", function(e){
+            console.log(" video is playing on foo, ", e, arguments);
         });
     }
 
