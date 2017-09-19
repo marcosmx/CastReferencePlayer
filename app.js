@@ -77,7 +77,7 @@ var _currentAsset = null;
 
     function initPlayer(data){
         var params = Object.assign({}, data.params);
-        params.onCreate = _onCreate;
+        //params.onCreate = _onCreate;
         _currentAsset = data.ec;
         if (_player === null) {
             console.log("player ctrl: about to create a new player instance", params);
