@@ -426,7 +426,7 @@ function printDebugMessage(command, event, ignorePattern) {
              screenController.showScreen(loadingScreen);
              break;
            case OO.EVENTS.PLAYBACK_READY:
-             player.mb.publish(OO.EVENTS.CAN_PLAY)   
+             /* player.mb.publish(OO.EVENTS.CAN_PLAY)   
              if (autoPlay) {
                // Controlled extention of displaying loading screen, currently set to 3 seconds.  
                // ATTN: Receiver HAS TO publish CAN_PLAY in case of autoPlay
@@ -436,7 +436,7 @@ function printDebugMessage(command, event, ignorePattern) {
                }, 3000);
              } else {
                player.mb.publish(OO.EVENTS.CAN_PLAY);
-             }
+             } */
              break;
            case OO.EVENTS.STREAM_PLAYING:
              // Show the player screen
@@ -457,7 +457,7 @@ function printDebugMessage(command, event, ignorePattern) {
              controls.setValuePlayhead(currentPlayheadTimeInfo);
              sendToAllSenders(JSON.stringify(arguments));
              break;
-           case OO.EVENTS.PLAYER_CREATED:
+           case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
              // Assign the root element and controls when player is created
              rootElement = document.querySelector(".innerWrapper");
              window.mediaElement = document.getElementsByClassName('video')[0];
