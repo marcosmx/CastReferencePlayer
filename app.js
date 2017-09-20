@@ -30,7 +30,7 @@
 
  // Closed Captioning resources
  var ccResourceMap = {}; // Resource map of closed captions, it has format: "language" => URL
- var ccLanguage = 'English'; // currently used closed captions language, empty if none
+ var ccLanguage = 'en'; // currently used closed captions language, empty if none
  var isLiveStream = false; // used for closed captions on live assets
 
  // loading screen elements
@@ -634,26 +634,7 @@ function printDebugMessage(command, event, ignorePattern) {
        player.mb.publish(OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE, { lang : 'live', value : 'Live Closed Captions' });
      }
    } else {
-     if ($("#cc_track")) {
-       $("#cc_track").remove();
-     }
-     if (!!language && !!ccResourceMap[language]) {
-       $("#player .innerWrapper .video")[0].crossOrigin = "anonymous";
-       $("#player .innerWrapper .video").append("<track id='cc_track' label='Closed captions' src='" +
-                                                ccResourceMap[language] + "' kind='subtitles' srclang='" +
-                                                language + "' default>");
-       var track = document.getElementById('cc_track');
-       track.addEventListener("load", function() {
-         // move cues to line 14, which is above scrubber_wrapper
-         var ccTrack = this.track;
-         var cues = ccTrack.cues;
-         for (var i = 0; i < cues.length; i++) {
-           if (cues[i].line == -1) {
-             cues[i].line = 14;
-           }
-         }
-       });
-     }
+    player.mb.publish(OO.EVENTS.SET_CLOSED_CAPTIONS_LANGUAGE, language);
    }
    ccLanguage = language;
  }
