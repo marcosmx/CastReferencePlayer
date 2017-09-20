@@ -45,9 +45,9 @@ function _onPlayheadTimeChanged() {
     //console.log("playhead time changed: ", _playHeadInfo);
 }
 
-function _onPlaying(e) {
+function _onPlaying() {
     console.log("player ctrl: init playback ", e);
-    _messageBus.broadcast(JSON.stringify({0: "playing"}));
+    _messageBus.broadcast(JSON.stringify(arguments));
 }
 
 function _onPause() {
@@ -68,10 +68,10 @@ function _onStop() {
 }
 
 function _onCreate(player) {
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
-    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
-    player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
-    player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);
+    //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
+    //player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
+    //player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
+    //player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);
     player.mb.subscribe(OO.EVENTS.PLAYING, _eventnamespace, _onPlaying);
 }
 
