@@ -46,7 +46,7 @@ function _onPlayheadTimeChanged() {
 }
 
 function _onPlaying() {
-    console.log("player ctrl: init playback ", e);
+    console.log("player ctrl: init playback ", arguments);
     _messageBus.broadcast(JSON.stringify(arguments));
 }
 
@@ -68,11 +68,26 @@ function _onStop() {
 }
 
 function _onCreate(player) {
-    //player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, _onVcCreatedElement);
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(){
+        console.log("VC created Element");
+        _playerEl.remove();
+        _playerEl = null;
+        _playerEl = _getVideoEl(data.domId);
+        if (_playerEl) {
+            mediaManager.setMediaElement(_playerEl);
+        }
+    });
     //player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
-    //player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, _onPlayheadTimeChanged);
-    //player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, _onPaused);
-    player.mb.subscribe(OO.EVENTS.PLAYING, _eventnamespace, _onPlaying);
+    player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, function(){
+        _playHeadInfo = [...arguments];
+    });
+    player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, function(){
+        var message = Object.assign({}, e); // flatten the object and just keep direct properties
+        _messageBus.broadcast(JSON.stringify(message));
+    });
+    player.mb.subscribe(OO.EVENTS.PLAYING, _eventnamespace, function(){
+        _messageBus.broadcast(JSON.stringify(arguments));
+    });
 }
 
 function initPlayer(data) {
@@ -171,9 +186,9 @@ _messageBus.onMessage = function handleMessage(e) {
             break;
         case "getstatus":
             var status = {
-                state: playerCtrl.getState(),
-                playhead: playerCtrl.getPlayHead(),
-                embed: playerCtrl.getCurrentAsset()
+                state: _player.getState(),
+                playhead: _playHeadInfo,
+                embed: _currentAsset
             }
             _messageBus.send(e.senderId, JSON.stringify(status));
             break;
