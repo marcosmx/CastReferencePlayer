@@ -463,7 +463,10 @@ function printDebugMessage(command, event, ignorePattern) {
              printDebugMessage("new mediaElement", window.mediaElement);
              window.mediaManager.setMediaElement(window.mediaElement);
              
-             controls = new _Controls(rootElement);             
+             if (controls === null){
+                controls = new _Controls(rootElement);   
+             }
+                       
              controls.showControls();
              // Handling timeouts
              handleReceiverTimeouts(player);
