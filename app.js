@@ -68,11 +68,11 @@ function _onStop() {
 }
 
 function _onCreate(player) {
-    player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, function(){
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(){
         console.log("VC created Element");
         _playerEl.remove();
         _playerEl = null;
-        _playerEl = document.querySelector("#player video");
+        _playerEl = document.querySelector("#player .video");
         if (_playerEl) {
             mediaManager.setMediaElement(_playerEl);
         }
