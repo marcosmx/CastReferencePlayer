@@ -68,7 +68,7 @@ function _onStop() {
 }
 
 function _onCreate(player) {
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(){
+   /*  player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(){
         console.log("VC created Element");
         _playerEl.remove();
         _playerEl = null;
@@ -76,7 +76,7 @@ function _onCreate(player) {
         if (_playerEl) {
             mediaManager.setMediaElement(_playerEl);
         }
-    });
+    }); */
     //player.mb.subscribe(OO.EVENTS.PLAYER_CREATED, _eventnamespace, _onPlayerCreated);
     player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, _eventnamespace, function(){
         _playHeadInfo = [...arguments];
@@ -129,14 +129,14 @@ _mediaManager.onLoad = function(event){
 
 _mediaManager["origOnStop"] = _mediaManager.onStop;
 _mediaManager.onStop = function(event) {
-    playerCtrl.stop();
+    _player.stop();
     _mediaManager["origOnStop"](event);
 }
 
 _mediaManager["origOnPause"] = _mediaManager.onPause;
 _mediaManager.onPause = function(event) {
     _mediaManager["origOnPause"](event);
-    playerCtrl.pause();    
+    _player.pause();    
     _mediaManager.sendStatus(event.senderId, event.data.requestId, true);
 }
 
