@@ -463,9 +463,7 @@ function printDebugMessage(command, event, ignorePattern) {
              printDebugMessage("new mediaElement", window.mediaElement);
              window.mediaManager.setMediaElement(window.mediaElement);
              
-             if (controls === null){
-                controls = new _Controls(rootElement);
-             }             
+             controls = new _Controls(rootElement);             
              controls.showControls();
              // Handling timeouts
              handleReceiverTimeouts(player);
@@ -593,7 +591,7 @@ function printDebugMessage(command, event, ignorePattern) {
        var title = (!data.title) ? "" : data.title;
        var promo_url = (!data.promo_url) ? "" : data.promo_url;
        promoImageElement.src = promo_url  + "?t=" + new Date().getTime();
-       controls.setUIELement(title, promo_url);
+       controls.reset(title, promo_url);
        controls.showControls();
      }
    }
@@ -853,9 +851,11 @@ function printDebugMessage(command, event, ignorePattern) {
  /**
  Setter method for updating control bar UI element of Title and promo image
  **/
- _Controls.prototype.setUIELement = function(title, promo_url) {
+ _Controls.prototype.reset = function(title, promo_url) {
    this.videoTitle.innerHTML = title;
    this.promoIcon.src = promo_url;
+   this.setValue(0, 0, 0, 0);
+
  }
 
  /**
