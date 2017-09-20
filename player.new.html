@@ -1,0 +1,55 @@
+<!--
+This sample demonstrates how to build your own Receiver for use with Google
+Cast.
+
+A receiver is typically an HTML5 application with a html, css, and JavaScript
+components.
+
+In this HTML5 page, we include our style sheet, the Receiver SDK, and our player
+JavaScript code.
+
+We Then define two layers within the player:
+
+1. The media layers
+2. The Overlay layers
+The overlay layer holds:
+   a. Logo for startup page
+   b. Media Artwork and information during loading
+   c. controls for Pause / Seek
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Change the title tag to your app's name to display as the details text on the Cast device picker -->
+  <title>Casting app name</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="player.css" />
+  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
+  <!-- <script src="//player.ooyala.com/core/6233f5fb56044b649b50dde3c5893e9d"></script> -->
+  <script src="//player.ooyala.com/core/e48c9b51282d406f957c666149763424"></script>
+</head>
+
+<body style="margin: 0">
+  <div id="splash-screen" class="fbox-container fs hidden">
+
+    <img id="splash-image" src="images/ooyala-logo.svg" />
+    <div id="status-cast">
+      Loading cast system...
+    </div>
+  </div>
+  <div id="media-info" class="hidden">
+    <div id="media-art"></div>
+    <div id="media-text">
+      <h3></h3>
+      <p></p>
+    </div>
+  </div>
+  <div id="player"></div>
+
+  <video src="" id="temp-video" class="hidden"></video>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
