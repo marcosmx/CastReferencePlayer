@@ -207,11 +207,11 @@ function onLoad(event) {
   ended = false;
   stopEvent = null;
   var playerData = event.data.media.customData;
-  handleLoadingScreenInfo(playerData);
+  //handleLoadingScreenInfo(playerData);
   // For first time setup, load the Ooyala player
   // Otherwise, simply set the embed code
   if (!hasBeenInitialized) {
-    screenController.showScreen(splashScreen);
+    //screenController.showScreen(splashScreen);
     initPlayer(playerData);
   } else {
     reinitPlayer(playerData);
