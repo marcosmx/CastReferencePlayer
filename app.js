@@ -478,6 +478,13 @@ function printDebugMessage(command, event, ignorePattern) {
              controls.setDisplaySpinner("block");
              break;
            case OO.EVENTS.BUFFERED:
+             // Show the player screen
+             screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
+             // Fade out the title, labels, and the scrubber after a specified delay
+             controls.fadeOutControls(controls.getDelayInMillis());
+             // Replace pause icon by play icon and fade it out after a specified delay
+             controls.fadeOutPausePlay(controls.getDelayInMillis());
+             
              // Hide spinner
              controls.setDisplaySpinner("none");
              break;
@@ -520,6 +527,7 @@ function printDebugMessage(command, event, ignorePattern) {
              break;
            case OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE:
            case OO.EVENTS.PLAYING:
+
              sendToAllSenders(JSON.stringify(arguments));
              break;
            case OO.EVENTS.ERROR:
