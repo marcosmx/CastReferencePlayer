@@ -389,7 +389,6 @@ function printDebugMessage(command, event, ignorePattern) {
      playerParams['autoplay'] = true;
    }
    autoPlay = playerParams['autoplay'];
-   delete playerParams.autoplay;
    ccLanguage = '';
    if (!!playerParams['ccLanguage']) {
      // player paramteres may contain ccLanguage: "en" (or other language), in which case
