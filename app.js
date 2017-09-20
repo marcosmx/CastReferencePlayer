@@ -68,7 +68,7 @@ function _onStop() {
 }
 
 function _onCreate(player) {
-    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(){
+    player.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_CREATED, _eventnamespace, function(e, data){
         console.log("VC created Element");
         _playerEl.remove();
         _playerEl = null;
@@ -82,8 +82,8 @@ function _onCreate(player) {
         _playHeadInfo = [...arguments];
     });
     player.mb.subscribe(OO.EVENTS.PAUSED, _eventnamespace, function(){
-        var message = Object.assign({}, e); // flatten the object and just keep direct properties
-        _messageBus.broadcast(JSON.stringify(message));
+        //var message = Object.assign({}, e); // flatten the object and just keep direct properties
+        _messageBus.broadcast(JSON.stringify(arguments));
     });
     player.mb.subscribe(OO.EVENTS.PLAYING, _eventnamespace, function(){
         _messageBus.broadcast(JSON.stringify(arguments));
