@@ -1,5 +1,5 @@
  // constants
- var OOYALA_PLAYER_URL = "//player.ooyala.com/core/e48c9b51282d406f957c666149763424?debug=true";
+ var OOYALA_PLAYER_URL = "//player.ooyala.com/core/e48c9b51282d406f957c666149763424";
  var SPLASH_SCREEN_SRC = "./images/ooyala-logo.png";
  var LOGO_IMAGE_SRC = "./images/ooyala-logo.png";
  var PAUSE_ICON_SRC = " ./images/pause.svg";
@@ -30,7 +30,7 @@
 
  // Closed Captioning resources
  var ccResourceMap = {}; // Resource map of closed captions, it has format: "language" => URL
- var ccLanguage = ''; // currently used closed captions language, empty if none
+ var ccLanguage = 'English'; // currently used closed captions language, empty if none
  var isLiveStream = false; // used for closed captions on live assets
 
  // loading screen elements
