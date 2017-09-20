@@ -1,55 +1,51 @@
-<!--
-This sample demonstrates how to build your own Receiver for use with Google
-Cast.
-
-A receiver is typically an HTML5 application with a html, css, and JavaScript
-components.
-
-In this HTML5 page, we include our style sheet, the Receiver SDK, and our player
-JavaScript code.
-
-We Then define two layers within the player:
-
-1. The media layers
-2. The Overlay layers
-The overlay layer holds:
-   a. Logo for startup page
-   b. Media Artwork and information during loading
-   c. controls for Pause / Seek
- -->
-<!DOCTYPE html>
 <html>
-
-<head>
-  <!-- Change the title tag to your app's name to display as the details text on the Cast device picker -->
-  <title>Casting app name</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="player.css" />
-  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
-  <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/1.0.0/media_player.js"></script>
-  <!-- <script src="//player.ooyala.com/core/6233f5fb56044b649b50dde3c5893e9d"></script> -->
-  <script src="//player.ooyala.com/core/e48c9b51282d406f957c666149763424"></script>
-</head>
-
-<body style="margin: 0">
-  <div id="splash-screen" class="fbox-container fs hidden">
-
-    <img id="splash-image" src="images/ooyala-logo.svg" />
-    <div id="status-cast">
-      Loading cast system...
-    </div>
-  </div>
-  <div id="media-info" class="hidden">
-    <div id="media-art"></div>
-    <div id="media-text">
-      <h3></h3>
-      <p></p>
-    </div>
-  </div>
-  <div id="player"></div>
-
-  <video src="" id="temp-video" class="hidden"></video>
-  <script type="text/javascript" src="app.js"></script>
-</body>
-
-</html>
+    <head>
+      <title>Chromecast Customized Receiver</title>
+      <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+      <link rel="shortcut icon" href="./images/favicon.ico" />
+      <link rel='stylesheet' href="./receiver_custom_style.css" type='text/css'>
+    </head>
+    <body style='overflow: hidden'>
+      <!-- Elements of Screens. You may customized the looks and feel of each Screens -->
+      <div id="splash_screen">
+        <img id="splash_image" class="absolute_center" />
+      </div>
+    
+      <div id="loading_screen">
+        <div id="loading_container">
+          <div id ="logo_wrap">
+            <img id = "logo_image" />
+          </div>
+          <div id ="information_container">
+            <div id ="promo_wrapper">
+              <img id = "promo_image" />
+            </div>
+            <div class="divider"> </div>
+            <div id = "information">
+              <div style = "padding: 0px">
+                <h1 id = "loading_title" class ="cast_text"></h1>
+                <h3 id = "loading_description" class ="cast_text"></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class ="loading_bar_wrapper">
+          <div class="loading_bar"></div>
+        </div>
+      </div>
+    
+      <div id='player'>
+          <video id="tmp_video"></video>
+      </div>
+      <div id="error_screen">
+        <div id="error_container" class="absolute_center">
+          <h1 id= "error_title" class ="cast_text" style="text-transform:uppercase"></h1>
+          <h3 id= "error_code" class ="cast_text"></h3>
+          <h3 id= "error_description" class ="cast_text"></h3>
+        </div>
+      </div>
+      <script src="cast.js"></script>
+    </body>
+    </html>
