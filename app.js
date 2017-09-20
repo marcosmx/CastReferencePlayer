@@ -267,7 +267,11 @@ function printDebugMessage(command, event, ignorePattern) {
      // if the last sender disconnects, then stop the cast session entirely if it
      // was an explicit disconnection
      if ((senders.length === 0) && (event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER)) {
-         window.castReceiverManager.stop();
+        if (player !== null){
+            player.destroy(function(){
+                window.castReceiverManager.stop();
+            });
+        }        
      }
    }
 
@@ -535,7 +539,6 @@ function printDebugMessage(command, event, ignorePattern) {
              break;
            case OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE:
            case OO.EVENTS.PLAYING:
-
              sendToAllSenders(JSON.stringify(arguments));
              break;
            case OO.EVENTS.ERROR:
