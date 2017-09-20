@@ -271,6 +271,8 @@ function printDebugMessage(command, event, ignorePattern) {
             player.destroy(function(){
                 window.castReceiverManager.stop();
             });
+        } else {
+            window.castReceiverManager.stop();
         }        
      }
    }
