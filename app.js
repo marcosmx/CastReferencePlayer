@@ -556,6 +556,9 @@ function printDebugMessage(command, event, ignorePattern) {
              displayErrorTitleDescription(error);
              sendToAllSenders(JSON.stringify(arguments));
              break;
+          case OO.EVENTS.ADS_PLAYED:
+            console.log(arguments);   
+          break;
            }
 
            printDebugMessage("receiver.html " + evt, arguments, "playheadTimeChanged");
