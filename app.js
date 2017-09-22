@@ -403,7 +403,7 @@ function printDebugMessage(command, event, ignorePattern) {
    }
 
    //data.ec = "o2YWQ4YzE6ono3qI5c3fN-R3Jhi1yPXn";
-   data.ec = "dqcGlqOTE6U2FJ8LTxvDV9P_GPzeae_G"
+   data.ec = "hsdHIyYzE668escyHgrFiednk4831Un3"
    //playerParams.embedToken = "//player.ooyala.com/sas/embed_token/lhNmYyOuUnCvRiHi5NbFBBLOG4xm/o2YWQ4YzE6ono3qI5c3fN-R3Jhi1yPXn?api_key=lhNmYyOuUnCvRiHi5NbFBBLOG4xm.S9VRE&expires=1507108002&signature=U3zyP8bgBQwOZrofz8J+76rNtAVe4EkW5OMszkPTd1c&override_syndication_group=override_synd_groups_in_backlot";
    //var extra = {"api_ssl_server":"https://player-staging.ooyala.com","api_server":"http://player-staging.ooyala.com","auth_ssl_server":"https://player-staging.ooyala.com/sas","auth_server":"http://player-staging.ooyala.com/sas"};
    //Object.assign(playerParams, extra);
