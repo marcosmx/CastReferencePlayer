@@ -1,4 +1,10 @@
 /*** BEGIN SPLASH STYLES ***/
+
+@font-face {
+  font-family: "music-font";
+  src: url("fonts/bravura.otf") format("opentype")
+}
+
 #splash_screen {
   width: 100%;
   height: 100%;
