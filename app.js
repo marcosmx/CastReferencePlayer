@@ -185,9 +185,6 @@ function onEnded() {
   }
   ended = true;
   printDebugMessage("onEnded", null);
-  if ( hasAds && !adsPlayed ){
-    return;
-  }
   window.mediaManager.onEndedOrig(event);
 }
 
@@ -211,6 +208,8 @@ function onLoad(event) {
   printDebugMessage("onLoad", event);
   stopped = false;
   ended = false;
+  adsPlayed = false;
+  hasAds = false;
   stopEvent = null;
   var playerData = event.data.media.customData;
   handleLoadingScreenInfo(playerData);
@@ -426,6 +425,10 @@ function printDebugMessage(command, event, ignorePattern) {
              sendToAllSenders(JSON.stringify(arguments));
              break;
            case OO.EVENTS.PLAYED:
+            //if the assets has ads and all of them was played do nothing, just skip the onStopOrig and onEnded methods
+            if (hasAds && adsPlayed){
+              return;
+            }
              // If finished playing, display the splash screen
              screenController.showScreen(splashScreen);
              if (stopped) {
