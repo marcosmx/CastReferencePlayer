@@ -44,6 +44,8 @@
  var stopped = false;
  var ended = false;
  var stopEvent = null;
+ var adsPlayed = false;
+ var hasAds = false;
 
  // Screen related variables
  var screenController = null;
@@ -177,11 +179,15 @@ function onStop(event) {
  Playback has finished, sender will be notified
  **/
 function onEnded() {
+  console.log("Entre al end del video")
   if (ended) {
     return;
   }
   ended = true;
   printDebugMessage("onEnded", null);
+  if ( hasAds && !adsPlayed ){
+    return;
+  }
   window.mediaManager.onEndedOrig(event);
 }
 
@@ -436,19 +442,6 @@ function printDebugMessage(command, event, ignorePattern) {
              }
              screenController.showScreen(loadingScreen);
              break;
-           case OO.EVENTS.PLAYBACK_READY:
-             /* player.mb.publish(OO.EVENTS.CAN_PLAY)   
-             if (autoPlay) {
-               // Controlled extention of displaying loading screen, currently set to 3 seconds.  
-               // ATTN: Receiver HAS TO publish CAN_PLAY in case of autoPlay
-               //player.mb.publish(OO.EVENTS.CAN_PLAY);
-               setTimeout(function() {            
-                 player.mb.publish(OO.EVENTS.INITIAL_PLAY);
-               }, 3000);
-             } else {
-               player.mb.publish(OO.EVENTS.CAN_PLAY);
-             } */
-             break;
            case OO.EVENTS.STREAM_PLAYING:
              // Show the player screen
              screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
@@ -558,7 +551,12 @@ function printDebugMessage(command, event, ignorePattern) {
              sendToAllSenders(JSON.stringify(arguments));
              break;
           case OO.EVENTS.ADS_PLAYED:
-            console.log(arguments);   
+            console.log("Ya se terminaron los ADSSSS  ",arguments);
+            adsPlayed = true;  
+          break;
+          case OO.EVENTS.WILL_PLAY_ADS:
+             console.log("Voy a tocar los Adddddss papuuuuu!!!!", arguments);
+             hasAds = true;
           break;
            }
 
