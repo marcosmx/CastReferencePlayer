@@ -47,6 +47,7 @@
  var adsPlayed = false;
  var hasAds = false;
 
+
  // Screen related variables
  var screenController = null;
  var screens = null;
@@ -180,6 +181,9 @@ function onStop(event) {
  **/
 function onEnded() {
   console.log("Entre al end del video")
+  if (hasAds && adsPlayed){
+    return;
+  }
   if (ended) {
     return;
   }
@@ -560,6 +564,9 @@ function printDebugMessage(command, event, ignorePattern) {
           case OO.EVENTS.WILL_PLAY_ADS:
              console.log("Voy a tocar los Adddddss papuuuuu!!!!", arguments);
              hasAds = true;
+          break;
+          case OO.EVENTS.EMBED_CODE_CHANGED:
+             console.log("EMBED_CODE_CHANGED, ", arguments);
           break;
            }
 
