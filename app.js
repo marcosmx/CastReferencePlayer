@@ -470,8 +470,12 @@ function printDebugMessage(command, event, ignorePattern) {
              break;
            case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
              // Assign the root element and controls when player is created
+             if (hasAds){
+               return;
+             }
+             videoId = arguments[1].domId;
              rootElement = document.querySelector(".innerWrapper");
-             window.mediaElement = document.getElementsByClassName('video')[0];
+             window.mediaElement = document.querySelectorAll(`#${videoId} video`)[0];
              printDebugMessage("new mediaElement", window.mediaElement);
              window.mediaManager.setMediaElement(window.mediaElement);
              
