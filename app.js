@@ -1,5 +1,5 @@
  // constants
- var OOYALA_PLAYER_URL = "//player.ooyala.com/core/e48c9b51282d406f957c666149763424?plugins=bm";
+ var OOYALA_PLAYER_URL = "//player.ooyala.com/core/e48c9b51282d406f957c666149763424";
  var SPLASH_SCREEN_SRC = "./images/ooyala-logo.png";
  var LOGO_IMAGE_SRC = "./images/ooyala-logo.png";
  var PAUSE_ICON_SRC = " ./images/pause.svg";
@@ -581,6 +581,7 @@ function printDebugMessage(command, event, ignorePattern) {
 
    // when the script has loaded, create the player
    playerJs.onload = (function(data) {
+     playerParams.debug = true;
      player = OO.Player.create('player', data.ec, playerParams);
    }).bind(this, data);
    document.head.appendChild(playerJs);
