@@ -402,164 +402,170 @@ function printDebugMessage(command, event, ignorePattern) {
 
    if (!playerParams.onCreate) {
      playerParams.onCreate = function(player) {
+       
        player.mb.subscribe("*", "chromecast", function(evt) {
-         switch (evt) {
-           case OO.EVENTS.PLAYHEAD_TIME_CHANGED:
-             currentPlayheadTimeInfo = arguments;
-             duration = arguments[2];
-             // As the playhead moves, update the progress bar, playhead, and duration
-             controls.setValuePlayhead(currentPlayheadTimeInfo);
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.PLAYED:
-            //if the assets has ads and all of them was played do nothing, just skip the onStopOrig and onEnded methods
-            if (hasAds && adsPlayed){
+        switch (evt) {
+          case OO.EVENTS.PLAYHEAD_TIME_CHANGED:
+            currentPlayheadTimeInfo = arguments;
+            duration = arguments[2];
+            // As the playhead moves, update the progress bar, playhead, and duration
+            controls.setValuePlayhead(currentPlayheadTimeInfo);
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.PLAYED:
+            // if the assets has ads and all of them was played do nothing, just skip the
+            // onStopOrig and onEnded methods
+            if (hasAds && adsPlayed) {
               return;
             }
-             // If finished playing, display the splash screen
-             screenController.showScreen(splashScreen);
-             if (stopped) {
-               window.mediaManager.onStopOrig(stopEvent);
-             } else if (!ended) {
-               window.mediaManager.onEnded();
-             }
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.SET_EMBED_CODE:
-             if ($("#cc_track")) {
-               // remove track element for closed captions, if any - a new one will be created if needed
-               $("#cc_track").remove();
-             }
-             screenController.showScreen(loadingScreen);
-             break;
-           case OO.EVENTS.STREAM_PLAYING:
-             // Show the player screen
-             screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
-             // Fade out the title, labels, and the scrubber after a specified delay
-             controls.fadeOutControls(controls.getDelayInMillis());
-             // Replace pause icon by play icon and fade it out after a specified delay
-             controls.fadeOutPausePlay(controls.getDelayInMillis());
-             controls.setDisplaySpinner("none");
-             break;
-           case OO.EVENTS.PAUSED:
-             // Finish fading of of play button if this is the case
-             finishFadeEffect(controls.playIcon);
-             // Show all the controls and make sure playhead has been updated
-             controls.showControls();
-             // Fade out the title, labels, and the scrubber after a specified delay
-             controls.fadeOutControls(controls.getDelayInMillis());
-             controls.setValuePlayhead(currentPlayheadTimeInfo);
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.PLAYBACK_READY:
-             // Assign the root element and controls when player is created
-             
-             rootElement = document.querySelector(".innerWrapper");
-             window.mediaElement = document.querySelectorAll(`#${playerId} video`)[0];
-             printDebugMessage("new mediaElement", window.mediaElement);
-             window.mediaManager.setMediaElement(window.mediaElement);
-             
-             if (controls === null){
-                controls = new _Controls(rootElement);   
-             }
-                       
-             controls.showControls();
-             // Handling timeouts
-             handleReceiverTimeouts(player);
-             break;
-           case OO.EVENTS.SEEKED:
-             controls.setValuePlayhead(currentPlayheadTimeInfo);
-             controls.fadeOutScrubber();
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.BUFFERING:
-             // Show spinner
-             controls.setDisplaySpinner("block");
-             break;
-           case OO.EVENTS.BUFFERED:
-             // Show the player screen
-             screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
-             // Fade out the title, labels, and the scrubber after a specified delay
-             controls.fadeOutControls(controls.getDelayInMillis());
-             // Replace pause icon by play icon and fade it out after a specified delay
-             controls.fadeOutPausePlay(controls.getDelayInMillis());
-             
-             // Hide spinner
-             controls.setDisplaySpinner("none");
-             break;
-           case OO.EVENTS.AUTHORIZATION_FETCHED:
-             var stream = arguments[1].streams[0];
-             if (stream) {
-               if (stream.is_live_stream) {
-                 printDebugMessage("Live stream:", arguments[1].streams[0].delivery_type);
-                 isLiveStream = true;
-               } else {
-                 printDebugMessage("Stream type:", arguments[1].streams[0].delivery_type);
-               }
-             } else {
-               printDebugMessage("No stream info", null);
-             }
-             break;
-           case OO.EVENTS.CONTENT_TREE_FETCHED:
-             // We should clear closed captions resource map as it may be populated from
-             // from playback of previous title
-             if (!$.isEmptyObject(ccResourceMap)) {
-               ccResourceMap = {}
-             }
-             // Closed captions availability for this asset is known when content tree is fetched.
-             // Content tree data is available in arguments[1], closed captions information
-             // is stored in closed_captions_vtt object of content tree
-             if (arguments[1].closed_captions_vtt) {
-               var ccData = arguments[1].closed_captions_vtt;
-               var languages = ccData.languages;
-               for (var i in languages) {
-                 // Populate resource map of closed captions, it has format:
-                 // "language" => URL
-                 printDebugMessage("CC:", languages[i] + " " + ccData.captions[languages[i]].url);
-                 ccResourceMap[languages[i]] = ccData.captions[languages[i]].url;
-               }
-             }
-             break;
-           case OO.EVENTS.SEEK:
-             // Just show seek bar, duration and played labels
-             controls.showScrubber();
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE:
-           case OO.EVENTS.PLAYING:
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
-           case OO.EVENTS.ERROR:
-             // Display the error screen with the proper errors
-             screenController.showScreen(errorScreen);
-             // Display the title and description errors
-             // the index 1 of the arguments array is an object containing the OO.ERROR code
-             var error = "";
-             if (arguments[1] && arguments[1].code) {
-               error = arguments[1].code;
-             }
+            // If finished playing, display the splash screen
+            screenController.showScreen(splashScreen);
+            if (stopped) {
+              window
+                .mediaManager
+                .onStopOrig(stopEvent);
+            } else if (!ended) {
+              window
+                .mediaManager
+                .onEnded();
+            }
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.SET_EMBED_CODE:
+            if ($("#cc_track")) {
+              // remove track element for closed captions, if any - a new one will be created
+              // if needed
+              $("#cc_track").remove();
+            }
+            screenController.showScreen(loadingScreen);
+            break;
+          case OO.EVENTS.STREAM_PLAYING:
+            // Show the player screen
+            screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
+            // Fade out the title, labels, and the scrubber after a specified delay
+            controls.fadeOutControls(controls.getDelayInMillis());
+            // Replace pause icon by play icon and fade it out after a specified delay
+            controls.fadeOutPausePlay(controls.getDelayInMillis());
+            controls.setDisplaySpinner("none");
+            break;
+          case OO.EVENTS.PAUSED:
+            // Finish fading of of play button if this is the case
+            finishFadeEffect(controls.playIcon);
+            // Show all the controls and make sure playhead has been updated
+            controls.showControls();
+            // Fade out the title, labels, and the scrubber after a specified delay
+            controls.fadeOutControls(controls.getDelayInMillis());
+            controls.setValuePlayhead(currentPlayheadTimeInfo);
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.PLAYBACK_READY:
+            // Assign the root element and controls when player is created
 
-             displayErrorTitleDescription(error);
-             sendToAllSenders(JSON.stringify(arguments));
-             break;
+            rootElement = document.querySelector(".innerWrapper");
+            window.mediaElement = document.querySelectorAll(`#${playerId} video`)[0];
+            printDebugMessage("new mediaElement", window.mediaElement);
+            window
+              .mediaManager
+              .setMediaElement(window.mediaElement);
+
+            if (controls === null) {
+              controls = new _Controls(rootElement);
+            }
+
+            controls.showControls();
+            // Handling timeouts
+            handleReceiverTimeouts(player);
+            break;
+          case OO.EVENTS.SEEKED:
+            controls.setValuePlayhead(currentPlayheadTimeInfo);
+            controls.fadeOutScrubber();
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.BUFFERING:
+            // Show spinner
+            controls.setDisplaySpinner("block");
+            break;
+          case OO.EVENTS.BUFFERED:
+            // Show the player screen
+            screenController.showScreen(playerScreen, "setClosedCaptionsLanguage(ccLanguage)");
+            // Fade out the title, labels, and the scrubber after a specified delay
+            controls.fadeOutControls(controls.getDelayInMillis());
+            // Replace pause icon by play icon and fade it out after a specified delay
+            controls.fadeOutPausePlay(controls.getDelayInMillis());
+
+            // Hide spinner
+            controls.setDisplaySpinner("none");
+            break;
+          case OO.EVENTS.AUTHORIZATION_FETCHED:
+            var stream = arguments[1].streams[0];
+            if (stream) {
+              if (stream.is_live_stream) {
+                printDebugMessage("Live stream:", arguments[1].streams[0].delivery_type);
+                isLiveStream = true;
+              } else {
+                printDebugMessage("Stream type:", arguments[1].streams[0].delivery_type);
+              }
+            } else {
+              printDebugMessage("No stream info", null);
+            }
+            break;
+          case OO.EVENTS.CONTENT_TREE_FETCHED:
+            // We should clear closed captions resource map as it may be populated from from
+            // playback of previous title
+            if (!$.isEmptyObject(ccResourceMap)) {
+              ccResourceMap = {}
+            }
+            // Closed captions availability for this asset is known when content tree is
+            // fetched. Content tree data is available in arguments[1], closed captions
+            // information is stored in closed_captions_vtt object of content tree
+            if (arguments[1].closed_captions_vtt) {
+              var ccData = arguments[1].closed_captions_vtt;
+              var languages = ccData.languages;
+              for (var i in languages) {
+                // Populate resource map of closed captions, it has format: "language" => URL
+                printDebugMessage("CC:", languages[i] + " " + ccData.captions[languages[i]].url);
+                ccResourceMap[languages[i]] = ccData.captions[languages[i]].url;
+              }
+            }
+            break;
+          case OO.EVENTS.SEEK:
+            // Just show seek bar, duration and played labels
+            controls.showScrubber();
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE:
+          case OO.EVENTS.PLAYING:
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
+          case OO.EVENTS.ERROR:
+            // Display the error screen with the proper errors
+            screenController.showScreen(errorScreen);
+            // Display the title and description errors the index 1 of the arguments array
+            // is an object containing the OO.ERROR code
+            var error = "";
+            if (arguments[1] && arguments[1].code) {
+              error = arguments[1].code;
+            }
+
+            displayErrorTitleDescription(error);
+            sendToAllSenders(JSON.stringify(arguments));
+            break;
           case OO.EVENTS.ADS_PLAYED:
-            console.log("Ya se terminaron los ADSSSS  ",arguments);
-            adsPlayed = true;  
-          break;
+            console.log("Ya se terminaron los ADSSSS  ", arguments);
+            adsPlayed = true;
+            break;
           case OO.EVENTS.WILL_PLAY_ADS:
-             console.log("Voy a tocar los Adddddss papuuuuu!!!!", arguments);
-             hasAds = true;
-          break;
+            console.log("Voy a tocar los Adddddss papuuuuu!!!!", arguments);
+            hasAds = true;
+            break;
           case OO.EVENTS.EMBED_CODE_CHANGED:
-             console.log("EMBED_CODE_CHANGED, ", arguments);
-          break;
+            console.log("EMBED_CODE_CHANGED, ", arguments);
+            break;
           case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
-             playerId = arguments[1].domId;
-          break;
-
-           }
-
-           printDebugMessage("receiver.html " + evt, arguments, "playheadTimeChanged");
+            playerId = "bitmovinplayer-video-" + arguments[1].domId;
+            break;
+        }
+        printDebugMessage("receiver.html " + evt, arguments, "playheadTimeChanged");
        });
      }
    }
@@ -580,6 +586,14 @@ function printDebugMessage(command, event, ignorePattern) {
      debug = data.debug;
 
      currentEmbedCode = data.ec;
+
+     //if the embed code it is the same, just trigger the replay event
+    if (player && player.getEmbedCode() === currentEmbedCode){
+      player.mb.publish(OO.EVENTS.REPLAY);
+      return;
+    }
+
+
      isLiveStream = false;
      duration = 0;
      var playerParams = {};
