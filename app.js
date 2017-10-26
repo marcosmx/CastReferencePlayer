@@ -553,7 +553,7 @@ function printDebugMessage(command, event, ignorePattern) {
           case OO.EVENTS.EMBED_CODE_CHANGED:
              console.log("EMBED_CODE_CHANGED, ", arguments);
           break;
-          case OO.EVENTS.VC_PLAYER_CREATED:
+          case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
              playerId = arguments[1].domId;
           break;
 
