@@ -22,6 +22,7 @@
  var debug = true;
  var initialTimeout = null;
  var player = null;
+ var playerId = null;
  var senders = [];
  var currentEmbedCode = null;
  var currentPlayheadTimeInfo = {};
@@ -452,9 +453,9 @@ function printDebugMessage(command, event, ignorePattern) {
              break;
            case OO.EVENTS.PLAYBACK_READY:
              // Assign the root element and controls when player is created
-             videoId = arguments[1].domId;
+             
              rootElement = document.querySelector(".innerWrapper");
-             window.mediaElement = document.querySelectorAll(`#${videoId} video`)[0];
+             window.mediaElement = document.querySelectorAll(`#${playerId} video`)[0];
              printDebugMessage("new mediaElement", window.mediaElement);
              window.mediaManager.setMediaElement(window.mediaElement);
              
@@ -551,6 +552,9 @@ function printDebugMessage(command, event, ignorePattern) {
           break;
           case OO.EVENTS.EMBED_CODE_CHANGED:
              console.log("EMBED_CODE_CHANGED, ", arguments);
+          break;
+          case OOYALA_PLAYER_URL.EVENTS.VC_PLAYER_CREATED:
+             playerId = arguments[1].domId;
           break;
 
            }
