@@ -183,9 +183,6 @@ function onStop(event) {
  **/
 function onEnded() {
   console.log("Entre al end del video")
-  if (hasAds && adsPlayed){
-    return;
-  }
   if (ended) {
     return;
   }
@@ -224,11 +221,12 @@ function onLoad(event) {
   if (!hasBeenInitialized) {
     screenController.showScreen(splashScreen);
     initPlayer(playerData);
+    $("#tmp_video").remove();
   } else {
     reinitPlayer(playerData);
   }
   window.mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-  $("#tmp_video").remove();
+  
 }
 
 /**
@@ -375,24 +373,6 @@ function printDebugMessage(command, event, ignorePattern) {
    var playerJs = document.createElement("script");
    playerJs.type = "text/javascript";
    playerJs.src = OOYALA_PLAYER_URL;
-  /*  if (debug || v3Version) {
-     if (playerJs.src.match(/\?/)) {
-         if (playerJs.src.match(/\?.+/)) {
-           // URL contains ? and some chars after it, presumably name=value pair(s), so we should append "&"
-           playerJs.src += "&";
-         }
-     } else {
-       playerJs.src += "?";
-     }
-     if (debug) {
-       playerJs.src += "debug=true";
-       if (v3Version) {
-         playerJs.src += "&" + v3Version;
-       }
-     } else {
-       playerJs.src += v3Version;
-     }
-   } */
 
    var playerParams = {};
    if (data.params) {
@@ -472,9 +452,6 @@ function printDebugMessage(command, event, ignorePattern) {
              break;
            case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
              // Assign the root element and controls when player is created
-             if (hasAds){
-               return;
-             }
              videoId = arguments[1].domId;
              rootElement = document.querySelector(".innerWrapper");
              window.mediaElement = document.querySelectorAll(`#${videoId} video`)[0];
@@ -541,6 +518,7 @@ function printDebugMessage(command, event, ignorePattern) {
                  ccResourceMap[languages[i]] = ccData.captions[languages[i]].url;
                }
              }
+             break;
            case OO.EVENTS.SEEK:
              // Just show seek bar, duration and played labels
              controls.showScrubber();
