@@ -462,7 +462,7 @@ function printDebugMessage(command, event, ignorePattern) {
             // Assign the root element and controls when player is created
 
             rootElement = document.querySelector(".innerWrapper");
-            window.mediaElement = document.querySelectorAll(`#${playerId} video`)[0];
+            window.mediaElement = document.querySelectorAll(`#${playerId}`)[0];
             printDebugMessage("new mediaElement", window.mediaElement);
             window
               .mediaManager
