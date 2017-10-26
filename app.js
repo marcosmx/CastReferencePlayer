@@ -450,7 +450,7 @@ function printDebugMessage(command, event, ignorePattern) {
              controls.setValuePlayhead(currentPlayheadTimeInfo);
              sendToAllSenders(JSON.stringify(arguments));
              break;
-           case OO.EVENTS.VC_VIDEO_ELEMENT_CREATED:
+           case OO.EVENTS.PLAYBACK_READY:
              // Assign the root element and controls when player is created
              videoId = arguments[1].domId;
              rootElement = document.querySelector(".innerWrapper");
@@ -552,12 +552,7 @@ function printDebugMessage(command, event, ignorePattern) {
           case OO.EVENTS.EMBED_CODE_CHANGED:
              console.log("EMBED_CODE_CHANGED, ", arguments);
           break;
-          case OO.EVENTS.PLAYBACK_READY:
-          console.log("PLAYBACK_READY: ", arguments);
-          break;
-          case OO.EVENTS.PLAYER_CREATED:
-          console.log("PLAYER CREATED: ", arguments);
-          break;
+
            }
 
            printDebugMessage("receiver.html " + evt, arguments, "playheadTimeChanged");
