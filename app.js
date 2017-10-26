@@ -413,22 +413,10 @@ function printDebugMessage(command, event, ignorePattern) {
             sendToAllSenders(JSON.stringify(arguments));
             break;
           case OO.EVENTS.PLAYED:
-            // if the assets has ads and all of them was played do nothing, just skip the
-            // onStopOrig and onEnded methods
-            if (hasAds && adsPlayed) {
-              return;
-            }
             // If finished playing, display the splash screen
             screenController.showScreen(splashScreen);
-            if (stopped) {
-              window
-                .mediaManager
-                .onStopOrig(stopEvent);
-            } else if (!ended) {
-              window
-                .mediaManager
-                .onEnded();
-            }
+            window.mediaManager.onEnded();
+            
             sendToAllSenders(JSON.stringify(arguments));
             break;
           case OO.EVENTS.SET_EMBED_CODE:
