@@ -552,6 +552,12 @@ function printDebugMessage(command, event, ignorePattern) {
           case OO.EVENTS.EMBED_CODE_CHANGED:
              console.log("EMBED_CODE_CHANGED, ", arguments);
           break;
+          case OO.EVENTS.PLAYBACK_READY:
+          console.log("PLAYBACK_READY: ", arguments);
+          break;
+          case OO.EVENTS.PLAYER_CREATED:
+          console.log("PLAYER CREATED: ", arguments);
+          break;
            }
 
            printDebugMessage("receiver.html " + evt, arguments, "playheadTimeChanged");
