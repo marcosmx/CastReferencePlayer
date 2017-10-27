@@ -101,7 +101,7 @@ function setupMediaManager() {
   window.mediaManager.onErrorOrig = window.mediaManager.onError;
   window.mediaManager.onError = onError.bind(this);
   window.mediaManager.customizedStatusCallback = customizedStatusCallback.bind(this);
-  window.mediaManager.onPlayAgainOrig = window.mediaManager.playAgain
+  window.mediaManager.onPlayAgainOrig = window.mediaManager.onPlayAgain;
   window.mediaManager.onPlayAgain = function(e){
     console.log("Play again event: ", e);
     player.mb.publish(OO.EVENTS.REPLAY);
