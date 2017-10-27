@@ -101,6 +101,13 @@ function setupMediaManager() {
   window.mediaManager.onErrorOrig = window.mediaManager.onError;
   window.mediaManager.onError = onError.bind(this);
   window.mediaManager.customizedStatusCallback = customizedStatusCallback.bind(this);
+  window.mediaManager.onPlayAgainOrig = window.mediaManager.playAgain
+  window.mediaManager.onPlayAgain = function(e){
+    console.log("Play again event: ", e);
+    player.mb.publish(OO.EVENTS.REPLAY);
+    window.mediaManager.onPlayAgainOrig(
+      new cast.receiver.MediaManager.Event(cast.receiver.MediaManager.EventType.PLAY_AGAIN, "on play again event", e.senderId));
+  }
 }
 
 /**
@@ -212,8 +219,6 @@ function onLoad(event) {
   printDebugMessage("onLoad", event);
   stopped = false;
   ended = false;
-  adsPlayed = false;
-  hasAds = false;
   stopEvent = null;
   var playerData = event.data.media.customData;
   handleLoadingScreenInfo(playerData);
@@ -224,7 +229,7 @@ function onLoad(event) {
     initPlayer(playerData);
     $("#tmp_video").remove();
   } else {
-    reinitPlayer(playerData);
+    reinitPlayer(playerData, event);
   }
   window.mediaManager.sendStatus(event.senderId, event.data.requestId, true);
   
@@ -569,7 +574,7 @@ function printDebugMessage(command, event, ignorePattern) {
  /**
  Sets the embed code of the player with the parameters
  **/
- function reinitPlayer(data) {
+ function reinitPlayer(data, event) {
    if (data && data.ec) {
      debug = data.debug;
 
@@ -577,7 +582,7 @@ function printDebugMessage(command, event, ignorePattern) {
 
      //if the embed code it is the same, just trigger the replay event
     if (player && player.getEmbedCode() === currentEmbedCode){
-      player.mb.publish(OO.EVENTS.REPLAY);
+      window.mediaManager.onPlayAgain(event);
       return;
     }
 
