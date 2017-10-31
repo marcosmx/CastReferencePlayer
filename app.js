@@ -215,7 +215,7 @@ function onError(errorObj) {
 /**
  Response to loadMedia request from sender's cast session
  **/
-function onLoad(event) {
+function onLoadOLD(event) {
   printDebugMessage("onLoad", event);
   stopped = false;
   ended = false;
@@ -231,8 +231,14 @@ function onLoad(event) {
   } else {
     reinitPlayer(playerData, event);
   }
-  window.mediaManager.sendStatus(event.senderId, event.data.requestId, true);
-  
+  window.mediaManager.sendStatus(event.senderId, event.data.requestId, true);  
+}
+
+function onLoad(e){
+  printDebugMessage("MediaManager:onLoad", e);
+  var params = event.data.media.customData;
+  handleLoadingScreenInfo(params);
+  initPlayer();
 }
 
 /**
@@ -350,11 +356,16 @@ function printDebugMessage(command, event, ignorePattern) {
    }
  }
 
+
+ function initPlayer(params){
+  console.log("InitPlayer: ",params);
+ }
+
  /**
  This initPlayer will be called when the sender sends the init call
  It will load Ooyala player and subscribe to all events that the player publishes
  **/
- function initPlayer(data) {
+ function initPlayerold(data) {
    // Clear the initial timeout set to timeout on the splash screen
    if (data && data.ec) {
      clearTimeout(initialTimeout);
