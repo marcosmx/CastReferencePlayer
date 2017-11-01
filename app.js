@@ -215,10 +215,9 @@ function onError(errorObj) {
 /**
  Response to loadMedia request from sender's cast session
  **/
-function onLoadOLD(event) {
+function onLoad(event) {
   printDebugMessage("onLoad", event);
   stopped = false;
-  ended = false;
   stopEvent = null;
   var playerData = event.data.media.customData;
   handleLoadingScreenInfo(playerData);
@@ -234,7 +233,7 @@ function onLoadOLD(event) {
   window.mediaManager.sendStatus(event.senderId, event.data.requestId, true);  
 }
 
-function onLoad(e){
+function onLoadEXP(e){
   printDebugMessage("MediaManager:onLoad", e);
   var params = event.data.media.customData;
   handleLoadingScreenInfo(params);
@@ -357,7 +356,7 @@ function printDebugMessage(command, event, ignorePattern) {
  }
 
 
- function initPlayer(params){
+ function initPlayerExp(params){
   console.log("InitPlayer: ",params);
  }
 
@@ -365,7 +364,8 @@ function printDebugMessage(command, event, ignorePattern) {
  This initPlayer will be called when the sender sends the init call
  It will load Ooyala player and subscribe to all events that the player publishes
  **/
- function initPlayerold(data) {
+ function initPlayer(data) {
+  ended = false;
    // Clear the initial timeout set to timeout on the splash screen
    if (data && data.ec) {
      clearTimeout(initialTimeout);
@@ -593,9 +593,12 @@ function printDebugMessage(command, event, ignorePattern) {
 
      //if the embed code it is the same, just trigger the replay event
     if (player && player.getEmbedCode() === currentEmbedCode){
-      window.mediaManager.onPlayAgain(event);
+      //window.mediaManager.onPlayAgain(event);
+      player.mb.publish(OO.EVENTS.REPLAY);
       return;
     }
+
+    ended = false;
 
 
      isLiveStream = false;
