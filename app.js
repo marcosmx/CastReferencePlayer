@@ -468,9 +468,9 @@ function printDebugMessage(command, event, ignorePattern) {
             rootElement = document.querySelector(".innerWrapper");
             window.mediaElement = document.querySelectorAll(`#${playerId}`)[0];
             printDebugMessage("new mediaElement", window.mediaElement);
-            window
-              .mediaManager
-              .setMediaElement(window.mediaElement);
+            if (window.mediaElement) {
+             window.mediaManager.setMediaElement(window.mediaElement);
+            } 
 
             if (controls === null) {
               controls = new _Controls(rootElement);
@@ -539,6 +539,10 @@ function printDebugMessage(command, event, ignorePattern) {
             break;
           case OO.EVENTS.CLOSED_CAPTIONS_INFO_AVAILABLE:
           case OO.EVENTS.PLAYING:
+            window.mediaElement = document.querySelectorAll(`#${playerId}`)[0];
+            if (window.mediaElement) {
+              window.mediaManager.setMediaElement(window.mediaElement);
+            }          
             sendToAllSenders(JSON.stringify(arguments));
             break;
           case OO.EVENTS.ERROR:
