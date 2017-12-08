@@ -307,4 +307,8 @@
   left: 10;
   bottom: 10;
 }
+
+#player .innerWrapper #subtitles {
+  font-family: 'music-font';
+}
 /*** END GENERAL STYLING***/
